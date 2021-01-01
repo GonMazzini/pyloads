@@ -53,7 +53,10 @@ class Rotor():
             r, c, t, twist = Rotor.blade_data['r'][row], Rotor.blade_data['c'][row], Rotor.blade_data['t/c'][row], Rotor.blade_data['twist'][row]
             print(r,c,t,twist)
 
-        return
+        return r
+
+    def flow_angle(self):
+        pass
 
 
 rotor = Rotor()
