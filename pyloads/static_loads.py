@@ -4,7 +4,7 @@ import pandas as pd  # 1.2.0
 import scipy as sp  #
 from scipy.interpolate import interp1d
 
-print(f'numpy vers {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
+print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
 
 
 # print(os.listdir(os.getcwd()))
@@ -14,7 +14,6 @@ class Rotor():
     """Rotor object can be used to calculate the normal and tangencial loads for
     the DTU 10 MW Wind Turbine."""
     # class attributes
-
     number_of_blades = 3
     radio = 89.17
 
@@ -49,6 +48,7 @@ class Rotor():
 
          Returns: (Cl, Cd)
          :type t: float"""
+
         cdthick, clthick = np.zeros(6), np.zeros(6)
 
         for k in range(6):
@@ -63,6 +63,7 @@ class Rotor():
         Cl = f2cl(t)
         Cd = f2cd(t)
         print(f'Cd= {Cd} \t Cl= {Cl}')
+
         return Cl, Cd
 
     def load_calc(self, wind_speed, pitch, rpm):
