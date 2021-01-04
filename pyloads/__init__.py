@@ -1,6 +1,7 @@
 from static_loads import Rotor
 import numpy as np
 
-rot = Rotor(rho=1.225)
-a=2.8*np.pi/180
-print(rot.lift_drag_coeff(t=5.38000000E+00, alpha=a))
+rot = Rotor()
+
+print('given t/c(100%) and alpha (in degrees) calculate Cd and Cl')
+print(rot.lift_drag_coeff(t=24.1, alpha=2*np.pi/180))

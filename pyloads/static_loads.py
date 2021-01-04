@@ -44,10 +44,13 @@ class Rotor():
     def lift_drag_coeff(self, t, alpha):
         # TODO:
         #   raise exceptions for thick and alpha
+        #   read how to write docstring in Python PEP-8
         """Interpolation for drag and lift coefficients.
 
          Returns: (Cl, Cd)
-         :type t: float"""
+         :type t: float (ie. 24.1)
+         """
+        # :type alpha: float (radian)
 
         cdthick, clthick = np.zeros(6), np.zeros(6)
 
@@ -111,4 +114,6 @@ class Rotor():
 
 if __name__ == "__main__":
     rotor = Rotor()
-    rotor.load_calc(wind_speed=9)
+    rotor.lift_drag_coeff(t=24.1,alpha=2*np.pi/180)
+
+    print('Finish ran static loads.')
