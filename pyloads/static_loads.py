@@ -3,7 +3,7 @@ import numpy as np  # 1.19.4
 import pandas as pd  # 1.2.0
 import scipy as sp  #
 from scipy.interpolate import interp1d
-
+from scipy.optimize import fsolve
 print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
 
 
@@ -88,6 +88,12 @@ class Rotor():
 
             else:
                 CT, a = fsolve(Glauert_eq, [1, a], args=(sigma, F, phi, Cn))
+
+            aa = 1 / (((4 * F * m.sin(phi) * m.cos(phi)) / (sigma * Ct)) - 1)
+            tol_a, tol_aa = abs(a - a0), abs(aa - aa0)
+            i += 1
+
+        v_rel = (v_0 / m.sin(phi)) * (1 - a)
 
         return a
 
