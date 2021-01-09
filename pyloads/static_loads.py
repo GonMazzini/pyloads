@@ -18,7 +18,8 @@ class Rotor():
     radio = 89.17
 
     """Load the aerodynamics profiles."""
-
+    # TODO:
+    #   This should be in a child class from Rotor called DTU-10MW
     ffa_241 = pd.read_csv('FFA-W3-241.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
     ffa_301 = pd.read_csv('FFA-W3-241.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
     ffa_360 = pd.read_csv('FFA-W3-241.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
@@ -69,41 +70,24 @@ class Rotor():
 
         return Cl, Cd
 
-    def load_calc(self, wind_speed, pitch, rpm):
-        v0 = wind_speed
+    def load_calc(self, TSR,v_0,theta,r,c,t_c,a=0.2,aa=0.2,i=0,imax=100):
+        tol_a, tol_aa = 10, 10
+        sigma = (c * B) / (2 * m.pi * r)
 
-        try:
-            v0 + 2
-        except TypeError:
-            print('The wind speed should be a number (int or float)')
+        while tol_a > 10 ** (-3) and tol_aa > 10 ** (-3) and i < imax:
+            a0, aa0 = a, aa
+            phi = m.atan(((1 - a) * R) / ((1 + aa) * TSR * r))
+            alpha = np.rad2deg(phi) - theta
+            Cl, Cd = Double_interpol(alpha, t_c)
+            Cn = Cl * m.cos(phi) + Cd * m.sin(phi)
+            Ct = Cl * m.sin(phi) - Cd * m.cos(phi)
+            F = (2 / m.pi) * m.acos(m.exp(-(B / 2) * (R - r) / (r * m.sin(abs(phi)))))
 
-        assert (v0 > 0), 'The wind speed should be positive'
+            if a <= 1 / 3:
+                a = 1 / (((4 * F * m.sin(phi) ** 2) / (sigma * Cn)) + 1)
 
-        print(len(Rotor.blade_data))
-        # assert isinstance(wind_speed, object)
-
-        print(self.rho)
-        for row in range(len(Rotor.blade_data)):
-            # FIXME: complete loads calculation code.
-            a, a_prime, k, i, conv, ac, diff = 0, 0, 0, 0, 1, 1 / 3, 0.0001
-            r, c, t, twist = Rotor.blade_data['r'][row], Rotor.blade_data['c'][row], Rotor.blade_data['t/c'][row], \
-                             Rotor.blade_data['twist'][row]
-            while k == 0:
-                i += 1
-                flow_angle = np.arctan(((1 - a) * v0) / ((1 + a_prime) * w * r))
-                alpha = flow_angle - (twist * np.pi / 180 + pitch * np.pi / 180)  # alpha in radians
-
-                Cn = Cl * np.cos(flow_angle) + Cd * np.sin(flow_angle)
-                Ct = Cl * np.sin(flow_angle) - Cd * np.cos(flow_angle)
-
-                v_rel = ((1 - a) * v0) / np.sin(flow_angle)
-
-                pN_load = 0.5 * rho * v_rel ** 2 * c * Cn
-                pT_load = 0.5 * rho * v_rel ** 2 * c * Ct
-
-                F = (2 / np.pi) * np.arccos(np.exp(-(B / 2) * ((R - r) / (r * np.sin(abs(flow_angle))))))
-
-                sigma = c * B / (2 * np.pi * r)
+            else:
+                CT, a = fsolve(Glauert_eq, [1, a], args=(sigma, F, phi, Cn))
 
         return a
 
