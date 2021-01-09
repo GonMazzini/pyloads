@@ -6,7 +6,8 @@ from scipy.interpolate import interp1d
 from scipy.optimize import fsolve
 print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
 
-
+# TODO
+#   LAST ERROR: ValueError: A value in x_new is above the interpolation range.
 # print(os.listdir(os.getcwd()))
 
 
@@ -70,21 +71,29 @@ class Rotor():
 
         return Cl, Cd
 
-    def load_calc(self, TSR,v_0,theta,r,c,t_c,a=0.2,aa=0.2,i=0,imax=100):
-        tol_a, tol_aa = 10, 10
-        sigma = (c * B) / (2 * m.pi * r)
 
-        while tol_a > 10 ** (-3) and tol_aa > 10 ** (-3) and i < imax:
+
+    def BEM(self, tsr, v_0, theta, r, c, t_c, a=0.2, aa=0.2, i=0, imax=100):
+
+        def Glauert_eq(x, sigma, F, phi, Cn):
+            return [x[0] - ((1 - x[1]) ** 2 * sigma * Cn) / (m.sin(phi) ** 2),
+                    x[0] - 4 * x[1] * (1 - 0.25 * (5 - 3 * x[1]) * x[1]) * F]
+
+        tol_a, tol_aa = 10, 10
+        B = Rotor.number_of_blades
+        sigma = (c * B) / (2 * np.pi * r)
+
+        while tol_a > 10**(-3) and tol_aa > 10**(-3) and i < imax:
             a0, aa0 = a, aa
-            phi = m.atan(((1 - a) * R) / ((1 + aa) * TSR * r))
+            phi = np.arctan(((1 - a) * Rotor.radio) / ((1 + aa) * tsr * r))
             alpha = np.rad2deg(phi) - theta
-            Cl, Cd = Double_interpol(alpha, t_c)
-            Cn = Cl * m.cos(phi) + Cd * m.sin(phi)
-            Ct = Cl * m.sin(phi) - Cd * m.cos(phi)
-            F = (2 / m.pi) * m.acos(m.exp(-(B / 2) * (R - r) / (r * m.sin(abs(phi)))))
+            Cl, Cd = self.lift_drag_coeff(alpha, t_c)
+            Cn = Cl * np.cos(phi) + Cd * np.sin(phi)
+            Ct = Cl * np.sin(phi) - Cd * np.cos(phi)
+            F = (2 / np.pi) * np.arccos(np.exp(-(B / 2) * (Rotor.radio - r) / (r * np.sin(abs(phi)))))
 
             if a <= 1 / 3:
-                a = 1 / (((4 * F * m.sin(phi) ** 2) / (sigma * Cn)) + 1)
+                a = 1 / (((4 * F * np.sin(phi) ** 2) / (sigma * Cn)) + 1)
 
             else:
                 CT, a = fsolve(Glauert_eq, [1, a], args=(sigma, F, phi, Cn))
@@ -94,16 +103,45 @@ class Rotor():
             i += 1
 
         v_rel = (v_0 / m.sin(phi)) * (1 - a)
+        pT = 0.5 * Ct * rho * (v_rel ** 2) * c
+        pN = 0.5 * Cn * rho * (v_rel ** 2) * c
 
-        return a
+        if i == imax:
+            print('warning: Not converged')
 
-    def flow_angle(self):
-        # TODO: define flow angle method.
-        pass
+        return pT, pN
+
+    def power(self, tsr, u, theta, r, c, t_c):
+        pT = np.zeros(len(r))
+        pN = np.zeros(len(r))
+        for i in range(len(r)):
+            try:
+                pT[i], pN[i] = self.BEM(tsr, u, theta[i], r[i], c[i], t_c[i])
+            except TypeError:
+                pT[i], pN[i] = np.nan, np.nan
+        # append and assign values at r=R
+        r = np.append(r, Rotor.radio)
+        pT = np.append(pT, 0)
+        pN = np.append(pN, 0)
+        w = tsr * u / Rotor.radio
+        #P = integrate(pT, r) * B * w
+        #T = thruster(pN, r)
+        return pT, pN
 
 
 if __name__ == "__main__":
+    #instance a rotor object.
+    WT_data = pd.read_csv('operation.txt', sep='\s+')
+    WT_data.index = WT_data.u
+    print(WT_data.loc[6])
+    u, pitch, rpm = WT_data.loc[6]
     rotor = Rotor()
-    rotor.lift_drag_coeff(t=24.1,alpha=2*np.pi/180)
+    print(type(rotor)) #<class '__main__.Rotor'>
+    # test power method
+    tsr = (rpm * np.pi / 30) * Rotor.radio / u
+
+    rotor.power(tsr,u,Rotor.blade_data['twist']+pitch,Rotor.blade_data['r'],Rotor.blade_data['c'],Rotor.blade_data['t/c'])
+
+
 
     print('Finish ran static loads.')
