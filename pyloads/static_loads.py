@@ -4,7 +4,9 @@ import pandas as pd  # 1.2.0
 import scipy as sp  #
 from scipy.interpolate import interp1d
 from scipy.optimize import fsolve
+
 print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
+
 
 # TODO
 #   LAST ERROR: ValueError: A value in x_new is above the interpolation range.
@@ -22,11 +24,11 @@ class Rotor():
     # TODO:
     #   This should be in a child class from Rotor called DTU-10MW
     ffa_241 = pd.read_csv('FFA-W3-241.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
-    ffa_301 = pd.read_csv('FFA-W3-241.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
-    ffa_360 = pd.read_csv('FFA-W3-241.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
-    ffa_480 = pd.read_csv('FFA-W3-241.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
-    ffa_600 = pd.read_csv('FFA-W3-241.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
-    cylinder = pd.read_csv('FFA-W3-241.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
+    ffa_301 = pd.read_csv('FFA-W3-301.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
+    ffa_360 = pd.read_csv('FFA-W3-360.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
+    ffa_480 = pd.read_csv('FFA-W3-480.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
+    ffa_600 = pd.read_csv('FFA-W3-600.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
+    cylinder = pd.read_csv('cylinder.txt', sep='\t', names=['alpha', 'Cl', 'Cd', 'Cm'])
 
     ffa_dict = dict(zip(np.arange(6), [ffa_241, ffa_301, ffa_360, ffa_480, ffa_600, cylinder]))
 
@@ -43,17 +45,21 @@ class Rotor():
         radial position."""
         return cls.blade_data
 
-    def lift_drag_coeff(self, t, alpha):
+    def lift_drag_coeff(self, alpha, t_c):
         # TODO:
         #   raise exceptions for thick and alpha
         #   read how to write docstring in Python PEP-8
         """Interpolation for drag and lift coefficients.
 
          Returns: (Cl, Cd)
-         :type t: float (ie. 24.1)
-         """
-        # :type alpha: float (radian)
 
+         --------------parameters:
+
+         t_c: float (ie. 24.1)
+         alpha: int or float (rad)
+         """
+
+        t = t_c
         cdthick, clthick = np.zeros(6), np.zeros(6)
 
         for k in range(6):
@@ -62,31 +68,33 @@ class Rotor():
             clthick[k] = f1cl(alpha * 180 / np.pi)  # must convert into degrees
             cdthick[k] = f1cd(alpha * 180 / np.pi)
 
+        print(f'clthick={clthick}')
+
         thick_prof = np.array([24.1, 30.1, 36., 48., 60., 100.])
         f2cl = interp1d(thick_prof, clthick)
         f2cd = interp1d(thick_prof, cdthick)
         Cl = f2cl(t)
         Cd = f2cd(t)
+        print(f'alpha:{alpha}, t_c={t_c}')
         print(f'Cd= {Cd} \t Cl= {Cl}')
 
         return Cl, Cd
 
-
-
     def BEM(self, tsr, v_0, theta, r, c, t_c, a=0.2, aa=0.2, i=0, imax=100):
 
         def Glauert_eq(x, sigma, F, phi, Cn):
-            return [x[0] - ((1 - x[1]) ** 2 * sigma * Cn) / (m.sin(phi) ** 2),
+            return [x[0] - ((1 - x[1]) ** 2 * sigma * Cn) / (np.sin(phi) ** 2),
                     x[0] - 4 * x[1] * (1 - 0.25 * (5 - 3 * x[1]) * x[1]) * F]
 
         tol_a, tol_aa = 10, 10
         B = Rotor.number_of_blades
         sigma = (c * B) / (2 * np.pi * r)
 
-        while tol_a > 10**(-3) and tol_aa > 10**(-3) and i < imax:
+        while tol_a > 10 ** (-3) and tol_aa > 10 ** (-3) and i < imax:
             a0, aa0 = a, aa
             phi = np.arctan(((1 - a) * Rotor.radio) / ((1 + aa) * tsr * r))
             alpha = np.rad2deg(phi) - theta
+            alpha = np.deg2rad(alpha)
             Cl, Cd = self.lift_drag_coeff(alpha, t_c)
             Cn = Cl * np.cos(phi) + Cd * np.sin(phi)
             Ct = Cl * np.sin(phi) - Cd * np.cos(phi)
@@ -98,13 +106,13 @@ class Rotor():
             else:
                 CT, a = fsolve(Glauert_eq, [1, a], args=(sigma, F, phi, Cn))
 
-            aa = 1 / (((4 * F * m.sin(phi) * m.cos(phi)) / (sigma * Ct)) - 1)
+            aa = 1 / (((4 * F * np.sin(phi) * np.cos(phi)) / (sigma * Ct)) - 1)
             tol_a, tol_aa = abs(a - a0), abs(aa - aa0)
             i += 1
 
-        v_rel = (v_0 / m.sin(phi)) * (1 - a)
-        pT = 0.5 * Ct * rho * (v_rel ** 2) * c
-        pN = 0.5 * Cn * rho * (v_rel ** 2) * c
+        v_rel = (v_0 / np.sin(phi)) * (1 - a)
+        pT = 0.5 * Ct * self.rho * (v_rel ** 2) * c
+        pN = 0.5 * Cn * self.rho * (v_rel ** 2) * c
 
         if i == imax:
             print('warning: Not converged')
@@ -116,6 +124,10 @@ class Rotor():
         pN = np.zeros(len(r))
         for i in range(len(r)):
             try:
+                if i != 0 and i != 1:
+                    pass
+                else:
+                    print(f'tsr={tsr}. u={u}, theta={theta[i]}, r={r[i]}, c={c[i]}, t_c={t_c[i]}')
                 pT[i], pN[i] = self.BEM(tsr, u, theta[i], r[i], c[i], t_c[i])
             except TypeError:
                 pT[i], pN[i] = np.nan, np.nan
@@ -124,24 +136,22 @@ class Rotor():
         pT = np.append(pT, 0)
         pN = np.append(pN, 0)
         w = tsr * u / Rotor.radio
-        #P = integrate(pT, r) * B * w
-        #T = thruster(pN, r)
+        # P = integrate(pT, r) * B * w
+        # T = thruster(pN, r)
         return pT, pN
 
 
 if __name__ == "__main__":
-    #instance a rotor object.
+    # instance a rotor object.
     WT_data = pd.read_csv('operation.txt', sep='\s+')
     WT_data.index = WT_data.u
     print(WT_data.loc[6])
     u, pitch, rpm = WT_data.loc[6]
     rotor = Rotor()
-    print(type(rotor)) #<class '__main__.Rotor'>
+    print(type(rotor))  # <class '__main__.Rotor'>
     # test power method
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    rotor.power(tsr,u,Rotor.blade_data['twist']+pitch,Rotor.blade_data['r'],Rotor.blade_data['c'],Rotor.blade_data['t/c'])
+    pT,pN =rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'], Rotor.blade_data['c'],Rotor.blade_data['t/c'])
 
-
-
-    print('Finish ran static loads.')
+print('Finish ran static loads.')
