@@ -68,15 +68,16 @@ class Rotor():
             clthick[k] = f1cl(alpha * 180 / np.pi)  # must convert into degrees
             cdthick[k] = f1cd(alpha * 180 / np.pi)
 
-        print(f'clthick={clthick}')
+
 
         thick_prof = np.array([24.1, 30.1, 36., 48., 60., 100.])
         f2cl = interp1d(thick_prof, clthick)
         f2cd = interp1d(thick_prof, cdthick)
         Cl = f2cl(t)
         Cd = f2cd(t)
-        print(f'alpha:{alpha}, t_c={t_c}')
-        print(f'Cd= {Cd} \t Cl= {Cl}')
+
+        #print(f'alpha:{alpha}, t_c={t_c}')
+        #print(f'Cd= {Cd} \t Cl= {Cl}')
 
         return Cl, Cd
 
