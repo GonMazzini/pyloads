@@ -132,7 +132,7 @@ class Rotor():
 
         return pT, pN
 
-    def power(self, tsr, u, theta, r, c, t_c), plot=False:
+    def power(self, tsr, u, theta, r, c, t_c,plot=False):
         pT = np.zeros(len(r))
         pN = np.zeros(len(r))
         for i in range(len(r)):
@@ -175,6 +175,7 @@ if __name__ == "__main__":
     # test power method
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    pT,pN =rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'], Rotor.blade_data['c'],Rotor.blade_data['t/c'])
+    rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'], Rotor.blade_data['c'],
+                Rotor.blade_data['t/c'], plot=True)
 
 print('Finish ran static loads.')
