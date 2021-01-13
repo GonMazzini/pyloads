@@ -40,10 +40,22 @@ class Rotor():
         self.rho = rho  # [kg/m3]
 
     @classmethod
-    def get_blade_data(cls):
+    def get_blade_data(cls, property='all'):
         """Display the blade data: twist, chord and thick/chord relation for corresponding
         radial position."""
-        return cls.blade_data
+
+        if property == 'all':
+            output = cls.blade_data
+        elif property == 'r':
+            output = cls.blade_data['r']
+        elif property == 'twist':
+            output = cls.blade_data['twist']
+        elif property == 'c':
+            output = cls.blade_data['c']
+        elif property == 't/c':
+            output = cls.blade_data['t/c']
+
+        return output
 
     def lift_drag_coeff(self, alpha, t_c):
         # TODO:
@@ -120,7 +132,7 @@ class Rotor():
 
         return pT, pN
 
-    def power(self, tsr, u, theta, r, c, t_c):
+    def power(self, tsr, u, theta, r, c, t_c), plot=False:
         pT = np.zeros(len(r))
         pN = np.zeros(len(r))
         for i in range(len(r)):
@@ -134,11 +146,21 @@ class Rotor():
                 pT[i], pN[i] = np.nan, np.nan
         # append and assign values at r=R
         r = np.append(r, Rotor.radio)
-        pT = np.append(pT, 0)
-        pN = np.append(pN, 0)
+        pT = np.append(pT[:-1], 0)  # T he -1 is a rusty way to solve the problem
+        pN = np.append(pN[:-1], 0)
         w = tsr * u / Rotor.radio
         # P = integrate(pT, r) * B * w
         # T = thruster(pN, r)
+
+
+        if plot:  # ( == True)
+            plt.figure()
+            plt.plot(Rotor.get_blade_data(property='r'), pN)
+            plt.grid()
+            plt.ylabel('normal loads [N/m]', fontsize=14)
+            plt.xlabel('rotor radius [m]', fontsize=14)
+            plt.show()
+
         return pT, pN
 
 
