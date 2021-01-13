@@ -2,6 +2,7 @@
 import numpy as np  # 1.19.4
 import pandas as pd  # 1.2.0
 import scipy as sp  #
+import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 from scipy.optimize import fsolve
 
@@ -93,9 +94,9 @@ class Rotor():
 
         return Cl, Cd
 
-    def BEM(self, tsr, v_0, theta, r, c, t_c, a=0.2, aa=0.2, i=0, imax=100):
+    def normal_tangential_loads(self, tsr, v_0, theta, r, c, t_c, a=0.2, aa=0.2, i=0, imax=100):
 
-        def Glauert_eq(x, sigma, F, phi, Cn):
+        def glauert_equation(x, sigma, F, phi, Cn):
             return [x[0] - ((1 - x[1]) ** 2 * sigma * Cn) / (np.sin(phi) ** 2),
                     x[0] - 4 * x[1] * (1 - 0.25 * (5 - 3 * x[1]) * x[1]) * F]
 
@@ -117,7 +118,7 @@ class Rotor():
                 a = 1 / (((4 * F * np.sin(phi) ** 2) / (sigma * Cn)) + 1)
 
             else:
-                CT, a = fsolve(Glauert_eq, [1, a], args=(sigma, F, phi, Cn))
+                CT = fsolve(glauert_equation, [1, a], args=(sigma, F, phi, Cn))  # [1, a] is necessary. why?
 
             aa = 1 / (((4 * F * np.sin(phi) * np.cos(phi)) / (sigma * Ct)) - 1)
             tol_a, tol_aa = abs(a - a0), abs(aa - aa0)
@@ -132,7 +133,7 @@ class Rotor():
 
         return pT, pN
 
-    def power(self, tsr, u, theta, r, c, t_c,plot=False):
+    def power(self, tsr, u, theta, r, c, t_c, plot_Loads = False):
         pT = np.zeros(len(r))
         pN = np.zeros(len(r))
         for i in range(len(r)):
@@ -141,21 +142,22 @@ class Rotor():
                     pass
                 else:
                     print(f'tsr={tsr}. u={u}, theta={theta[i]}, r={r[i]}, c={c[i]}, t_c={t_c[i]}')
-                pT[i], pN[i] = self.BEM(tsr, u, theta[i], r[i], c[i], t_c[i])
+                pT[i], pN[i] = self.normal_tangential_loads(tsr, u, theta[i], r[i], c[i], t_c[i])
             except TypeError:
                 pT[i], pN[i] = np.nan, np.nan
         # append and assign values at r=R
         r = np.append(r, Rotor.radio)
-        pT = np.append(pT[:-1], 0)  # T he -1 is a rusty way to solve the problem
+        pT = np.append(pT[:-1], 0)  # The -1 is a rusty way to solve the problem
         pN = np.append(pN[:-1], 0)
         w = tsr * u / Rotor.radio
         # P = integrate(pT, r) * B * w
         # T = thruster(pN, r)
 
 
-        if plot:  # ( == True)
+        if plot_Loads:  # ( == True)
             plt.figure()
             plt.plot(Rotor.get_blade_data(property='r'), pN)
+            plt.plot(Rotor.get_blade_data(property='r'), pT)
             plt.grid()
             plt.ylabel('normal loads [N/m]', fontsize=14)
             plt.xlabel('rotor radius [m]', fontsize=14)
@@ -175,7 +177,10 @@ if __name__ == "__main__":
     # test power method
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'], Rotor.blade_data['c'],
-                Rotor.blade_data['t/c'], plot=True)
+    A, B = rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'], Rotor.blade_data['c'],
+                Rotor.blade_data['t/c'], plot_Loads=True)
+
+    a, b = rotor.normal_tangential_loads(tsr, u, Rotor.blade_data['twist'][0] + pitch, Rotor.blade_data['r'][0], Rotor.blade_data['c'][0],
+                Rotor.blade_data['t/c'][0])
 
 print('Finish ran static loads.')
