@@ -155,6 +155,8 @@ class Rotor():
 
 
         if plot_Loads:  # ( == True)
+            # TODO
+            #   Add labels to grahps.
             plt.figure()
             plt.plot(Rotor.get_blade_data(property='r'), pN)
             plt.plot(Rotor.get_blade_data(property='r'), pT)
@@ -182,5 +184,10 @@ if __name__ == "__main__":
 
     a, b = rotor.normal_tangential_loads(tsr, u, Rotor.blade_data['twist'][0] + pitch, Rotor.blade_data['r'][0], Rotor.blade_data['c'][0],
                 Rotor.blade_data['t/c'][0])
+
+# TODO
+#   * improve plots
+#   * add power and thrust calculation
+
 
 print('Finish ran static loads.')
