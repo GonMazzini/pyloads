@@ -14,7 +14,7 @@ print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t sc
 # print(os.listdir(os.getcwd()))
 
 
-class Rotor():
+class Rotor:
     """Rotor object can be used to calculate the normal and tangencial loads for
     the DTU 10 MW Wind Turbine."""
     # class attributes
@@ -44,7 +44,7 @@ class Rotor():
     def get_blade_data(cls, property='all'):
         """Display the blade data: twist, chord and thick/chord relation for corresponding
         radial position."""
-
+        output = ''
         if property == 'all':
             output = cls.blade_data
         elif property == 'r':
@@ -150,7 +150,10 @@ class Rotor():
 
         return pT, pN
 
-    def power(self, tsr, u, theta, r, c, t_c, plot_Loads=False):
+    def power(self, tsr, u, theta, r, c, t_c, plot_Loads = False):
+        """Calculate the power and trhust for given operational parameters.
+        This method uses the norma_tangencial_loads in order to calculate the loads."""
+
         pT = np.zeros(len(r))
         pN = np.zeros(len(r))
         for i in range(len(r)):
@@ -179,6 +182,28 @@ class Rotor():
 
         return power, thrust, pT, pN
 
+    def power_curve(self, u_vector, w_vector, pitch_vector, plot_curve=True):
+        """Calculate and plot the Power Curve given a vector of wind speed,
+        rotational speed (in RPM) and corresponding pitch angle."""
+
+        P, T = np.zeros(len(u_vector)), np.zeros(len(u_vector))
+        df = Rotor.blade_data.iloc[0:]
+        pN = np.zeros([len(u_vector), len(df.r)])
+        pT = np.zeros([len(u_vector), len(df.r)])
+        print(u_vector)
+        for j in range(len(u_vector)):
+            u = u_vector.values[j]
+            w = w_vector.values[j]*np.pi/30 #convert from RPM to rad/s
+            pitch = pitch_vector.values[j]
+            TSR = w*Rotor.radio/u
+            print(TSR, w, pitch)
+            P[j], T[j], pT[j,], pN[j,] = self.power(TSR, u, df['twist'] + pitch, df['r'], df['c'], df['t/c'])
+        if plot_curve:
+            plt.plot(u_vector,P/1e6, linestyle='--', marker='o')
+            plt.xlabel('radial position')
+            plt.ylabel('power [MW]')
+            plt.grid()
+        return P, T
 
 if __name__ == "__main__":
     # instance a rotor object.
@@ -191,11 +216,15 @@ if __name__ == "__main__":
     # test power method
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    power, thrust, pT, pN = rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'], Rotor.blade_data['c'],
-                                        Rotor.blade_data['t/c'], plot_Loads=True)
+    P,T = rotor.power_curve(WT_data.u,WT_data.RPM, WT_data.pitch)
 
-    tan_i, norm_i = rotor.normal_tangential_loads(tsr, u, Rotor.blade_data['twist'][0] + pitch, Rotor.blade_data['r'][0],
-                                                    Rotor.blade_data['c'][0], Rotor.blade_data['t/c'][0])
+    # power, thrust, pT, pN = rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'],
+    #                                     Rotor.blade_data['c'],
+    #                                     Rotor.blade_data['t/c'], plot_Loads=True)
+    #
+    # tan_i, norm_i = rotor.normal_tangential_loads(tsr, u, Rotor.blade_data['twist'][0] + pitch,
+    #                                               Rotor.blade_data['r'][0],
+    #                                               Rotor.blade_data['c'][0], Rotor.blade_data['t/c'][0])
 
 # TODO
 #   * Review... different results as IPYNB :
@@ -205,7 +234,8 @@ if __name__ == "__main__":
 #      3474.49291476, 3421.50774457, 3224.94102283, 2815.05298268,
 #      2063.40641495, 0.])
 #   * improve plots
-#   * add power and thrust calculation
+#   * add power and thrust calculation DONE
+#   * add DEFLECTION !
 
 
 print('Finish ran static loads.')
