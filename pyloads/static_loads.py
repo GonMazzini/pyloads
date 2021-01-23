@@ -58,6 +58,25 @@ class Rotor():
 
         return output
 
+    @staticmethod
+    def integrate(y, r):
+        """Useful function for numerical integration, used for power"""
+        M = 0  # dummy assignment before loop
+        for k in range(len(y) - 1):
+            A_k = (y[k + 1] - y[k]) / (r[k + 1] - r[k])
+            B_k = (y[k] * r[k + 1] - y[k + 1] * r[k]) / (r[k + 1] - r[k])
+            M += 1 / 3 * A_k * ((r[k + 1]) ** 3 - (r[k]) ** 3) + 0.5 * B_k * ((r[k + 1]) ** 2 - (r[k]) ** 2)
+        return M
+
+    @staticmethod
+    def thruster(pN, r):
+        # [r] m
+        T = 0
+        B = Rotor.number_of_blades
+        for i in range(len(pN) - 1):
+            T += (pN[i + 1] + pN[i]) * 0.5 * (r[i + 1] - r[i])
+        return T * B
+
     def lift_drag_coeff(self, alpha, t_c):
         # TODO:
         #   raise exceptions for thick and alpha
@@ -81,16 +100,14 @@ class Rotor():
             clthick[k] = f1cl(alpha * 180 / np.pi)  # must convert into degrees
             cdthick[k] = f1cd(alpha * 180 / np.pi)
 
-
-
         thick_prof = np.array([24.1, 30.1, 36., 48., 60., 100.])
         f2cl = interp1d(thick_prof, clthick)
         f2cd = interp1d(thick_prof, cdthick)
         Cl = f2cl(t)
         Cd = f2cd(t)
 
-        #print(f'alpha:{alpha}, t_c={t_c}')
-        #print(f'Cd= {Cd} \t Cl= {Cl}')
+        # print(f'alpha:{alpha}, t_c={t_c}')
+        # print(f'Cd= {Cd} \t Cl= {Cl}')
 
         return Cl, Cd
 
@@ -133,15 +150,11 @@ class Rotor():
 
         return pT, pN
 
-    def power(self, tsr, u, theta, r, c, t_c, plot_Loads = False):
+    def power(self, tsr, u, theta, r, c, t_c, plot_Loads=False):
         pT = np.zeros(len(r))
         pN = np.zeros(len(r))
         for i in range(len(r)):
             try:
-                # if i != 0 and i != 1:
-                #     pass
-                # else:
-                #     print(f'tsr={tsr}. u={u}, theta={theta[i]}, r={r[i]}, c={c[i]}, t_c={t_c[i]}')
                 pT[i], pN[i] = self.normal_tangential_loads(tsr, u, theta[i], r[i], c[i], t_c[i])
             except TypeError:
                 pT[i], pN[i] = np.nan, np.nan
@@ -150,13 +163,12 @@ class Rotor():
         pT = np.append(pT[:-1], 0)  # The -1 is a rusty way to solve the problem
         pN = np.append(pN[:-1], 0)
         w = tsr * u / Rotor.radio
-        # P = integrate(pT, r) * B * w
-        # T = thruster(pN, r)
-
+        power = Rotor.integrate(pT, r) * Rotor.number_of_blades * w
+        thrust = Rotor.thruster(pN, r)
 
         if plot_Loads:  # ( == True)
             # TODO
-            #   Add labels to grahps.
+            #   Add labels to graphs.
             plt.figure()
             plt.plot(Rotor.get_blade_data(property='r'), pN)
             plt.plot(Rotor.get_blade_data(property='r'), pT)
@@ -165,7 +177,7 @@ class Rotor():
             plt.xlabel('rotor radius [m]', fontsize=14)
             plt.show()
 
-        return pT, pN
+        return power, thrust, pT, pN
 
 
 if __name__ == "__main__":
@@ -179,13 +191,19 @@ if __name__ == "__main__":
     # test power method
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    A, B = rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'], Rotor.blade_data['c'],
-                       Rotor.blade_data['t/c'], plot_Loads=True)
+    power, thrust, pT, pN = rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'], Rotor.blade_data['c'],
+                                        Rotor.blade_data['t/c'], plot_Loads=True)
 
-    a, b = rotor.normal_tangential_loads(tsr, u, Rotor.blade_data['twist'][0] + pitch, Rotor.blade_data['r'][0], Rotor.blade_data['c'][0],
-                                          Rotor.blade_data['t/c'][0])
+    tan_i, norm_i = rotor.normal_tangential_loads(tsr, u, Rotor.blade_data['twist'][0] + pitch, Rotor.blade_data['r'][0],
+                                                    Rotor.blade_data['c'][0], Rotor.blade_data['t/c'][0])
 
 # TODO
+#   * Review... different results as IPYNB :
+#     [56.73502664, 128.66511904, 196.82870201, 955.83255009,
+#      1372.0058535, 1685.01982088, 2137.75442846, 2601.22578824,  <<<<< 2601 is the first different value.
+#      2986.14621076, 3263.07927127, 3431.68926186, 3461.78866371,
+#      3474.49291476, 3421.50774457, 3224.94102283, 2815.05298268,
+#      2063.40641495, 0.])
 #   * improve plots
 #   * add power and thrust calculation
 
