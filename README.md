@@ -1,7 +1,7 @@
 # pyloads
-_pyton package to calculate loads and deflections.
+Pyton package to calculate loads and deflections from a wind turbine.
 Additionally:
-*Power coefficient.
+*Power coefficient and plot of power curve.
 *Thrust coefficient.
 
-$1+1$
+
