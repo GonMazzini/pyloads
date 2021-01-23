@@ -138,10 +138,10 @@ class Rotor():
         pN = np.zeros(len(r))
         for i in range(len(r)):
             try:
-                if i != 0 and i != 1:
-                    pass
-                else:
-                    print(f'tsr={tsr}. u={u}, theta={theta[i]}, r={r[i]}, c={c[i]}, t_c={t_c[i]}')
+                # if i != 0 and i != 1:
+                #     pass
+                # else:
+                #     print(f'tsr={tsr}. u={u}, theta={theta[i]}, r={r[i]}, c={c[i]}, t_c={t_c[i]}')
                 pT[i], pN[i] = self.normal_tangential_loads(tsr, u, theta[i], r[i], c[i], t_c[i])
             except TypeError:
                 pT[i], pN[i] = np.nan, np.nan
@@ -180,10 +180,10 @@ if __name__ == "__main__":
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
     A, B = rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'], Rotor.blade_data['c'],
-                Rotor.blade_data['t/c'], plot_Loads=True)
+                       Rotor.blade_data['t/c'], plot_Loads=True)
 
     a, b = rotor.normal_tangential_loads(tsr, u, Rotor.blade_data['twist'][0] + pitch, Rotor.blade_data['r'][0], Rotor.blade_data['c'][0],
-                Rotor.blade_data['t/c'][0])
+                                          Rotor.blade_data['t/c'][0])
 
 # TODO
 #   * improve plots
