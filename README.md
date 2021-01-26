@@ -2,4 +2,4 @@
 Additionally 
 - Power coefficient
 - Thrust coefficient
-- Poer curve for WTG.
+- Power curve for WTG.
