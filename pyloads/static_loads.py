@@ -217,15 +217,15 @@ if __name__ == "__main__":
     # test power method
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    P, T = rotor.power_curve(WT_data.u, WT_data.RPM, WT_data.pitch)
+    # P, T = rotor.power_curve(WT_data.u, WT_data.RPM, WT_data.pitch)
 
-    # power, thrust, pT, pN = rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'],
-    #                                     Rotor.blade_data['c'],
-    #                                     Rotor.blade_data['t/c'], plot_Loads=True)
-    #
-    # tan_i, norm_i = rotor.normal_tangential_loads(tsr, u, Rotor.blade_data['twist'][0] + pitch,
-    #                                               Rotor.blade_data['r'][0],
-    #                                               Rotor.blade_data['c'][0], Rotor.blade_data['t/c'][0])
+    power, thrust, pT, pN = rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'],
+                                        Rotor.blade_data['c'],
+                                        Rotor.blade_data['t/c'], plot_Loads=True)
+
+    tan_i, norm_i = rotor.normal_tangential_loads(tsr, u, Rotor.blade_data['twist'][0] + pitch,
+                                                  Rotor.blade_data['r'][0],
+                                                  Rotor.blade_data['c'][0], Rotor.blade_data['t/c'][0])
 
 # TODO
 #   * Review... different results as IPYNB :
