@@ -1,7 +1,5 @@
-# pyloads
-## Python package to calculate loads and deflections.
-
-- Power coefficient.
-- Thrust coefficient.
-
-
+# Python package for calculating the static loads for a wind turbine blade. 
+Additionally 
+- Power coefficient
+- Thrust coefficient
+- Poer curve for WTG.
