@@ -2,4 +2,6 @@
 Additionally 
 - Power coefficient
 - Thrust coefficient
-- Power curve for WTG.
+- Power curve plot for WTG.
+
+This project is in the early phase of the development.
