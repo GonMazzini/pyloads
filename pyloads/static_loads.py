@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 from scipy.optimize import fsolve
 
+"""Local modules"""
+from pyloads.blade_data import BladeFeatures
+
 print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
 
 
@@ -15,11 +18,12 @@ print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t sc
 
 
 class Rotor:
-    """Rotor object can be used to calculate the normal and tangencial loads for
+    """Rotor object can be used to calculate the normal and tangential loads for
     the DTU 10 MW Wind Turbine."""
     # class attributes
     number_of_blades = 3
-    radio = 89.17
+    radio = 89.17  # [m]
+    rho = 1.225  # [km/m3]
 
     """Load the aerodynamics profiles."""
     # TODO:
@@ -33,30 +37,33 @@ class Rotor:
 
     ffa_dict = dict(zip(np.arange(6), [ffa_241, ffa_301, ffa_360, ffa_480, ffa_600, cylinder]))
 
-    blade_data = pd.read_csv('bladedat.txt', sep='\t', names=['r', 'twist', 'c', 't/c'])
+    # blade_data = pd.read_csv('bladedat.txt', sep='\t', names=['r', 'twist', 'c', 't/c'])
 
     # class constructor
 
-    def __init__(self, rho=1.225):
-        self.rho = rho  # [kg/m3]
-
-    @classmethod
-    def get_blade_data(cls, property='all'):
-        """Display the blade data: twist, chord and thick/chord relation for corresponding
-        radial position."""
-        output = ''
-        if property == 'all':
-            output = cls.blade_data
-        elif property == 'r':
-            output = cls.blade_data['r']
-        elif property == 'twist':
-            output = cls.blade_data['twist']
-        elif property == 'c':
-            output = cls.blade_data['c']
-        elif property == 't/c':
-            output = cls.blade_data['t/c']
-
-        return output
+    def __init__(self, radio=np.array([2.8, 11.0027383, 16.871021, 22.9641225, 32.3076383,
+                                       41.5730197, 50.4110617, 58.5344352, 65.7500952, 71.9674921,
+                                       77.1859743, 78.7133469, 80.1402166, 82.7084849, 84.9251565,
+                                       86.8264859, 88.4486629, 89.166])
+                 , twist=np.array([14.5, 14.4320088, 12.5459743, 8.89245229, 6.38219779,
+                                   4.67357583, 2.88655238, 1.20718981, -0.13037962, -1.11392478,
+                                   -1.86195876, -2.0776268, -2.2800794, -2.64408409, -2.94507068,
+                                   -3.17732896, -3.35752648, -3.428])
+                 , cord=np.array([5.38, 5.45248001, 5.86600432, 6.18451124, 6.01996243,
+                                  5.42189119, 4.69821952, 3.99867965, 3.39809449, 2.91304006,
+                                  2.53594729, 2.4307714, 2.33143176, 2.12906893, 1.9033225,
+                                  1.62601186, 1.18359898, 0.6])
+                 , t_c=np.array([100., 86.0491476, 61.0969583, 43.0356446, 32.4150527,
+                                 27.8103477, 25.317976, 24.2644205, 24.1006815, 24.1,
+                                 24.1000016, 24.1000006, 24.1, 24.1, 24.1,
+                                 24.1, 24.1, 24.1])):
+        self.radio = radio
+        self.twist = twist
+        self.cord = cord
+        self.t_c = t_c
+        # TODO:
+        #   check that the len of the features is the same
+        #   check that the data has valid ranges..
 
     @staticmethod
     def integrate(y, r):
@@ -142,8 +149,8 @@ class Rotor:
             i += 1
 
         v_rel = (v_0 / np.sin(phi)) * (1 - a)
-        pT = 0.5 * Ct * self.rho * (v_rel ** 2) * c
-        pN = 0.5 * Cn * self.rho * (v_rel ** 2) * c
+        pT = 0.5 * Ct * Rotor.rho * (v_rel ** 2) * c
+        pN = 0.5 * Cn * Rotor.rho * (v_rel ** 2) * c
 
         if i == imax:
             print('warning: Not converged')
@@ -173,8 +180,8 @@ class Rotor:
             # TODO
             #   Add labels to graphs.
             plt.figure()
-            plt.plot(Rotor.get_blade_data(property='r'), pN)
-            plt.plot(Rotor.get_blade_data(property='r'), pT)
+            plt.plot(self.radio, pN)
+            plt.plot(self.radio, pT)
             plt.grid()
             plt.ylabel('normal loads [N/m]', fontsize=14)
             plt.xlabel('rotor radius [m]', fontsize=14)
@@ -187,9 +194,9 @@ class Rotor:
         rotational speed (in RPM) and corresponding pitch angle."""
 
         P, T = np.zeros(len(u_vector)), np.zeros(len(u_vector))
-        df = Rotor.blade_data.iloc[0:]
-        pN = np.zeros([len(u_vector), len(df.r)])
-        pT = np.zeros([len(u_vector), len(df.r)])
+        #  df = Rotor.blade_data.iloc[0:]
+        pN = np.zeros([len(u_vector), len(self.radio)])
+        pT = np.zeros([len(u_vector), len(self.radio)])
         print(u_vector)
         for j in range(len(u_vector)):
             u = u_vector.values[j]
@@ -197,7 +204,7 @@ class Rotor:
             pitch = pitch_vector.values[j]
             TSR = w * Rotor.radio / u
             print(TSR, w, pitch)
-            P[j], T[j], pT[j,], pN[j,] = self.power(TSR, u, df['twist'] + pitch, df['r'], df['c'], df['t/c'])
+            P[j], T[j], pT[j,], pN[j,] = self.power(TSR, u, self.twist + pitch, self.radio, self.cord, self.t_c)
         if plot_curve:
             plt.plot(u_vector, P / 1e6, linestyle='--', marker='o')
             plt.xlabel('Wind speed')
@@ -212,20 +219,20 @@ if __name__ == "__main__":
     WT_data.index = WT_data.u
     print(WT_data.loc[6])
     u, pitch, rpm = WT_data.loc[6]
-    rotor = Rotor()
-    print(type(rotor))  # <class '__main__.Rotor'>
+    dtu_10mw = Rotor()
+    print(type(dtu_10mw))  # <class '__main__.Rotor'>
     # test power method
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
     # P, T = rotor.power_curve(WT_data.u, WT_data.RPM, WT_data.pitch)
 
-    power, thrust, pT, pN = rotor.power(tsr, u, Rotor.blade_data['twist'] + pitch, Rotor.blade_data['r'],
-                                        Rotor.blade_data['c'],
-                                        Rotor.blade_data['t/c'], plot_Loads=True)
+    power, thrust, pT, pN = dtu_10mw.power(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
+                                        dtu_10mw.cord,
+                                        dtu_10mw.t_c, plot_Loads=True)
 
-    tan_i, norm_i = rotor.normal_tangential_loads(tsr, u, Rotor.blade_data['twist'][0] + pitch,
-                                                  Rotor.blade_data['r'][0],
-                                                  Rotor.blade_data['c'][0], Rotor.blade_data['t/c'][0])
+    tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[0] + pitch,
+                                                  dtu_10mw.radio[0],
+                                                  dtu_10mw.cord[0], dtu_10mw.t_c[0])
 
 # TODO
 #   * Review... different results as IPYNB :
