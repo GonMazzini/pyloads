@@ -1,8 +1,6 @@
 import numpy as np
 import pandas as pd
 
-pb = pd.DataFrame({'alpha': [1, 2, 3], 'cd': [0.1, 0.2, 0.3]})
-print(pb.head())
 
 
 class AeroProfiles:
