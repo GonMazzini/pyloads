@@ -20,7 +20,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/pyloads/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/LICENCE.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pyloads/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -329,7 +331,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611696216622</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="add some tests">
+      <created>1611733486533</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1611733486533</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
