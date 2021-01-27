@@ -13,12 +13,6 @@ from pyloads.operation_dtu10mw import Operation
 
 print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
 
-
-# TODO
-#   LAST ERROR: ValueError: A value in x_new is above the interpolation range.
-# print(os.listdir(os.getcwd()))
-
-
 class Rotor(Operation):
     """Rotor object can be used to calculate the normal and tangential loads for
     the DTU 10 MW Wind Turbine.
@@ -34,6 +28,18 @@ class Rotor(Operation):
     number_of_blades = 3
     radio = 89.17  # [m]
     rho = 1.225  # [km/m3]
+    # TODO
+    #   remove this attribute?
+    operation = pd.DataFrame(
+        {'u': [4., 5., 6., 7., 8., 9., 10., 11., 12., 13., 14., 15., 16., 17., 18., 19., 20., 21.,
+               22., 23., 24., 25., ],
+         'pitch': [2.751, 1.966, 0.896, 0., 0., 0., 0., 0., 4.502, 7.266,
+                   9.292, 10.958, 12.499, 13.896, 15.2, 16.432, 17.618, 18.758, 19.86,
+                   20.927,
+                   21.963, 22.975],
+         'RPM': [6., 6., 6., 6., 6.426, 7.229, 8.032, 8.836, 9.6, 9.6, 9.6, 9.6,
+                 9.6, 9.6, 9.6, 9.6, 9.6, 9.6, 9.6, 9.6, 9.6, 9.6, ]
+         })
 
     # blade_data = pd.read_csv('bladedat.txt', sep='\t', names=['r', 'twist', 'c', 't/c'])
 
