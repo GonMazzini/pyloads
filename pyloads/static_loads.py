@@ -9,6 +9,7 @@ from scipy.optimize import fsolve
 """Local modules"""
 from pyloads.blade_data import BladeFeatures
 from pyloads.aerodynamic_profiles import AeroProfiles
+from pyloads.operation_dtu10mw import Operation
 
 print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
 
@@ -18,21 +19,28 @@ print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t sc
 # print(os.listdir(os.getcwd()))
 
 
-class Rotor:
+class Rotor(Operation):
     """Rotor object can be used to calculate the normal and tangential loads for
-    the DTU 10 MW Wind Turbine."""
+    the DTU 10 MW Wind Turbine.
+
+    Parameters
+    ----------
+    radio : array , default=None
+    twist : array , default=None
+    cord : array , default=None
+    t_c : array , default=None
+    profiles : array , default='Default'"""
     # class attributes
     number_of_blades = 3
     radio = 89.17  # [m]
     rho = 1.225  # [km/m3]
-
-
 
     # blade_data = pd.read_csv('bladedat.txt', sep='\t', names=['r', 'twist', 'c', 't/c'])
 
     # class constructor
 
     def __init__(self, radio=None, twist=None, cord=None, t_c=None, profiles='Default'):
+        super().__init__()
         bld = BladeFeatures()
         # Take the parameters from BladeFeatures corresponding to DTU 10MW
         if radio is None:
@@ -51,7 +59,7 @@ class Rotor:
         # TODO:
         #   This should be in a child class from Rotor called DTU-10MW
         if profiles == 'Default':
-            aero_prof=AeroProfiles()
+            aero_prof = AeroProfiles()
 
             ffa_241 = aero_prof.ffa_241
             ffa_301 = aero_prof.ffa_301
@@ -158,7 +166,7 @@ class Rotor:
 
         return pT, pN
 
-    def power(self, tsr, u, theta, r, c, t_c, plot_Loads=False):
+    def power_thrust_coefficient(self, tsr, u, theta, r, c, t_c, plot_Loads=False):
         """Calculate the power and trhust for given operational parameters.
         This method uses the norma_tangencial_loads in order to calculate the loads."""
 
@@ -178,8 +186,6 @@ class Rotor:
         thrust = Rotor.thruster(pN, r)
 
         if plot_Loads:  # ( == True)
-            # TODO
-            #   Add labels to graphs.
             plt.figure()
             plt.plot(self.radio, pN)
             plt.plot(self.radio, pT)
@@ -205,7 +211,8 @@ class Rotor:
             pitch = pitch_vector.values[j]
             TSR = w * Rotor.radio / u
             print(TSR, w, pitch)
-            P[j], T[j], pT[j,], pN[j,] = self.power(TSR, u, self.twist + pitch, self.radio, self.cord, self.t_c)
+            P[j], T[j], pT[j,], pN[j,] = self.power_thrust_coefficient(TSR, u, self.twist + pitch, self.radio,
+                                                                       self.cord, self.t_c)
         if plot_curve:
             plt.plot(u_vector, P / 1e6, linestyle='--', marker='o')
             plt.xlabel('Wind speed')
@@ -216,24 +223,25 @@ class Rotor:
 
 if __name__ == "__main__":
     # instance a rotor object.
-    WT_data = pd.read_csv('operation.txt', sep='\s+')
-    WT_data.index = WT_data.u
-    print(WT_data.loc[6])
-    u, pitch, rpm = WT_data.loc[6]
+    # WT_data = pd.read_csv('operation.txt', sep='\s+')
+    # WT_data.index = WT_data.u
+    # print(WT_data.loc[6])
+    # u, pitch, rpm = WT_data.loc[6]
     dtu_10mw = Rotor()
     print(type(dtu_10mw))  # <class '__main__.Rotor'>
     # test power method
+    u, pitch, rpm = dtu_10mw.show_operation(u=4)
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
     # P, T = rotor.power_curve(WT_data.u, WT_data.RPM, WT_data.pitch)
 
-    power, thrust, pT, pN = dtu_10mw.power(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
-                                        dtu_10mw.cord,
-                                        dtu_10mw.t_c, plot_Loads=True)
+    power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
+                                                              dtu_10mw.cord,
+                                                              dtu_10mw.t_c, plot_Loads=True)
 
-    tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[0] + pitch,
-                                                  dtu_10mw.radio[0],
-                                                  dtu_10mw.cord[0], dtu_10mw.t_c[0])
+    # tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[0] + pitch,
+    #                                              dtu_10mw.radio[0],
+    #                                              dtu_10mw.cord[0], dtu_10mw.t_c[0])
 
 # TODO
 #   * Review... different results as IPYNB :

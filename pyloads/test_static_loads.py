@@ -20,7 +20,7 @@ class TestStaticLoads(unittest.TestCase):
         self.assertEqual(tan_i, -16.635578670240793, 'should be -16.635578670240793 ')  # -16.635578670240793
         self.assertEqual(norm_i, 56.735026640634054, 'should be 56.735026640634054 ')  # 56.735026640634054
 
-    def test_power(self):
+    def test_power_thrust_coefficient(self):
         dtu_10mw = Rotor()
         print(dtu_10mw.radio)
 
@@ -29,13 +29,12 @@ class TestStaticLoads(unittest.TestCase):
         u, pitch, rpm = WT_data.loc[6]
         tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-        power, thrust, pT, pN = dtu_10mw.power(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
-                                               dtu_10mw.cord,
-                                               dtu_10mw.t_c, plot_Loads=True)
+        power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
+                                                                  dtu_10mw.cord,
+                                                                  dtu_10mw.t_c, plot_Loads=True)
 
         self.assertEqual(power, 1599385.8391734336, 'should be 1599385.8391734336')
         self.assertEqual(thrust, 501337.71234120766, 'should be 501337.71234120766')
-
 
 
 if __name__ == '__main__':

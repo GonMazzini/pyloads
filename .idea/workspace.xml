@@ -19,7 +19,12 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="" />
+    <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/pyloads/operation_dtu10mw.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyloads/static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/static_loads.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyloads/test_static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/test_static_loads.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -59,7 +64,7 @@
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\pyloads" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.__init__">
+  <component name="RunManager" selected="Python.static_loads">
     <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -81,19 +86,16 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="aerodynamic_profiles" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="operation_dtu10mw" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyloads/aerodynamic_profiles.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyloads/operation_dtu10mw.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="true" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -106,9 +108,6 @@
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -167,18 +166,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.__init__" />
-      <item itemvalue="Python.aerodynamic_profiles" />
       <item itemvalue="Python.static_loads" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.test_static_loads" />
+      <item itemvalue="Python.operation_dtu10mw" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.test" />
         <item itemvalue="Python.static_loads" />
+        <item itemvalue="Python.operation_dtu10mw" />
+        <item itemvalue="Python.test" />
         <item itemvalue="Python.__init__" />
         <item itemvalue="Python.static_loads" />
-        <item itemvalue="Python.test_static_loads" />
       </list>
     </recent_temporary>
   </component>
@@ -348,7 +347,14 @@
       <option name="project" value="LOCAL" />
       <updated>1611734424625</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="add some tests">
+      <created>1611734819467</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1611734819467</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
