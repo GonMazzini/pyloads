@@ -173,8 +173,8 @@ class Rotor(Operation):
         return pT, pN
 
     def power_thrust_coefficient(self, tsr, u, theta, r, c, t_c, plot_Loads=False):
-        """Calculate the power and trhust for given operational parameters.
-        This method uses the norma_tangencial_loads in order to calculate the loads."""
+        """Calculate the power and thrust for given operational parameters.
+        This method uses the norma_tangential_loads in order to calculate the loads."""
 
         pT = np.zeros(len(r))
         pN = np.zeros(len(r))
@@ -236,14 +236,15 @@ if __name__ == "__main__":
     dtu_10mw = Rotor()
     print(type(dtu_10mw))  # <class '__main__.Rotor'>
     # test power method
+    oper_df = dtu_10mw.show_operation() # returns a DataFrame
     u, pitch, rpm = dtu_10mw.show_operation(u=4)
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    # P, T = rotor.power_curve(WT_data.u, WT_data.RPM, WT_data.pitch)
+    P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch)
 
-    power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
-                                                              dtu_10mw.cord,
-                                                              dtu_10mw.t_c, plot_Loads=True)
+    # power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
+    #                                                           dtu_10mw.cord,
+    #                                                           dtu_10mw.t_c, plot_Loads=True)
 
     # tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[0] + pitch,
     #                                              dtu_10mw.radio[0],

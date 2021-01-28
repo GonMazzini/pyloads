@@ -10,7 +10,7 @@ setup(
     author='Gonzalo Mazzini',  # Type in your name
     author_email='gmazzini@itba.edu.ar',  # Type in your E-Mail
     url='https://github.com/GonMazzini/pyloads',  # Provide either the link to your github or to your website
-    download_url='https://github.com/GonMazzini/pyloads/archive/vers.0.0.1.tar.gz',  # I explain this later on
+    download_url='https://github.com/GonMazzini/pyloads/archive/v1.0.5.tar.gz',  # I explain this later on
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
