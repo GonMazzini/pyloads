@@ -142,6 +142,8 @@ class Rotor(Operation):
         tol_a, tol_aa = 10, 10
         B = Rotor.number_of_blades
         sigma = (c * B) / (2 * np.pi * r)
+        if verbose:
+            a_list, aa_list, phi_list, alpha_list, i_list = [], [], [], [], []
 
         while tol_a > 10 ** (-3) and tol_aa > 10 ** (-3) and i < imax:
             a0, aa0 = a, aa
@@ -152,15 +154,15 @@ class Rotor(Operation):
             Cn = Cl * np.cos(phi) + Cd * np.sin(phi)
             Ct = Cl * np.sin(phi) - Cd * np.cos(phi)
 
-            if i==0:
-                print(Rotor.radio)
-                print(r)
-                print(tsr)
-                print('phi:',phi)
-                print('theta:',theta)
-                print('alpha:',alpha)
-                print('Cl:',Cl)
-                print('Cl:', Cd)
+            # if i == 0: #get info of first values to check
+            #     print(Rotor.radio)
+            #     print(r)
+            #     print(tsr)
+            #     print('phi:',phi)
+            #     print('theta:',theta)
+            #     print('alpha:',alpha)
+            #     print('Cl:',Cl)
+            #     print('Cl:', Cd)
 
             F = (2 / np.pi) * np.arccos(np.exp(-(B / 2) * (Rotor.radio - r) / (r * np.sin(abs(phi)))))
 
@@ -178,11 +180,13 @@ class Rotor(Operation):
                 print('a_prime: ',aa)
                 print('phi: ',phi)
                 print('alpha: ',alpha)
-                a_list, aa_list, phi_list,alpha_list=[],[],[],[]
+
                 a_list.append(a)
                 aa_list.append(aa)
                 phi_list.append(phi)
                 alpha_list.append(alpha)
+                i_list.append(i)
+
 
 
             i += 1
@@ -190,6 +194,26 @@ class Rotor(Operation):
         print(alpha)
         if verbose:
             print('final iteration (i):',i)
+            if i>1:
+            # TODO
+            #   review if figsize is correct.
+                fig, axes = plt.subplots(2,2, figsize=(12,2))
+                print('i_list', i_list)
+                print('a_list', a_list)
+                axes[0,0].plot(i_list,a_list, marker='o')
+                axes[0,0].set_ylabel('a', fontsize=14)
+                axes[0,0].set_xlabel('iteration num', fontsize=14)
+                axes[0,1].plot(i_list,aa_list,marker='o')
+                axes[0,1].set_ylabel('a_prime', fontsize=14)
+                axes[0,1].set_xlabel('iteration num')
+                axes[1,0].plot(i_list,phi_list,marker='o')
+                axes[1,0].set_ylabel('flow angle (phi)', fontsize=14)
+                axes[1,0].set_xlabel('iteration num')
+                axes[1,1].plot(i_list,alpha_list,marker='o')
+                axes[1,1].set_ylabel('attack angle (alpha)', fontsize=14)
+                axes[1,1].set_xlabel('iteration num')
+                plt.show()
+
         v_rel = (v_0 / np.sin(phi)) * (1 - a)
         pT = 0.5 * Ct * Rotor.rho * (v_rel ** 2) * c
         pN = 0.5 * Cn * Rotor.rho * (v_rel ** 2) * c
@@ -269,13 +293,13 @@ if __name__ == "__main__":
 
     # P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch)
 
-    power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
-                                                              dtu_10mw.cord,
-                                                              dtu_10mw.t_c, plot_Loads=True)
+    # power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
+    #                                                           dtu_10mw.cord,
+    #                                                           dtu_10mw.t_c, plot_Loads=True)
 
-    # tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[4] + pitch,
-    #                                              dtu_10mw.radio[4],
-    #                                              dtu_10mw.cord[4], dtu_10mw.t_c[4], verbose=True)
+    tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[4] + pitch,
+                                                 dtu_10mw.radio[4],
+                                                 dtu_10mw.cord[4], dtu_10mw.t_c[4], verbose=True)
 
 # TODO
 #   * Review... different results as IPYNB :
