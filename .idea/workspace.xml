@@ -20,17 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/.ipynb_checkpoints/Static loads and deflection-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/docs/notebooks/.ipynb_checkpoints/Static loads and deflection-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/FFA-W3-241.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/FFA-W3-241.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/FFA-W3-301.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/FFA-W3-301.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/FFA-W3-360.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/FFA-W3-360.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/FFA-W3-480.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/FFA-W3-480.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/FFA-W3-600.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/FFA-W3-600.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/Static loads and deflection.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/docs/notebooks/Static loads and deflection.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/bladedat.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/bladedat.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/cylinder.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/cylinder.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/operation.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/operation.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyloads/static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/static_loads.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,7 +57,11 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs\DTU_10MW_data" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs\notebooks" />
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads" />
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\pyloads" />
     </key>
@@ -427,7 +422,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612009666282</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="add docs directory">
+      <created>1612009884245</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1612009884245</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -462,6 +464,7 @@
     <MESSAGE value="Same results for v=11 as martin code" />
     <MESSAGE value="add plots for norm_tan_method" />
     <MESSAGE value="solve subplots for norm_tan_method" />
-    <option name="LAST_COMMIT_MESSAGE" value="solve subplots for norm_tan_method" />
+    <MESSAGE value="add docs directory" />
+    <option name="LAST_COMMIT_MESSAGE" value="add docs directory" />
   </component>
 </project>

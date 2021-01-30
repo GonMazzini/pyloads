@@ -82,7 +82,15 @@ class Rotor(Operation):
 
     @staticmethod
     def integrate(y, r):
-        """Useful function for numerical integration, used for power"""
+        """Useful function for numerical integration.
+
+        parameters
+        ----------
+        y : array
+            function to be integrated
+        r : array
+            integrate over r radial positions.
+        """
         M = 0  # dummy assignment before loop
         for k in range(len(y) - 1):
             A_k = (y[k + 1] - y[k]) / (r[k + 1] - r[k])
@@ -92,6 +100,14 @@ class Rotor(Operation):
 
     @staticmethod
     def thruster(pN, r):
+        """Compute the total Thrust (T * num_blades) for the Rotor.
+
+        parameter
+        ---------
+        pN : array
+            normal loads vector (i.e as returned by norma_tangential_loads method.
+        r : array
+            vector with radial position [m]"""
         # [r] m
         T = 0
         B = Rotor.number_of_blades
@@ -133,7 +149,44 @@ class Rotor(Operation):
 
         return Cl, Cd
 
-    def normal_tangential_loads(self, tsr, v_0, theta, r, c, t_c, a=0.2, aa=0.2, i=0, imax=100, verbose=False):
+    def normal_tangential_loads(self, tsr, v_0, r, theta, c, t_c, a=0.2, aa=0.2, imax=100, verbose=False):
+        # TODO:
+        #   Add velocity triangle vector plot
+        """Calculate the Tangential and Normal loads (in N/m) given the wind speed and tip speed ratio (tsr) for a given
+        radial position (twist, cord length and thickness/corde ratio at the radial position must be given).
+
+        Parameters
+        ----------
+        tsr : int or float
+            Tip speed ratio.
+        v_0 : int or float
+            Wind speed [m/s].
+        r : int or float
+            Radial position.
+        theta : int or float
+            Local twist at r.
+        c : int or float
+            Cord length.
+        t_c : int or float
+            Thickness/cord ratio.
+        a : int or float, default=0.2
+            tangential induction factor
+        aa : int or float, default=0.2
+            normal induction factor
+        imax : int, default=100
+            max number of iter before stoping loop.
+        verbose : bool, default=False
+            if True, print and plot the variables for each iteration.
+
+        Returns
+        -------
+        pT : float
+            tangential load [N/m] at radial position.
+        pN : float
+            normal load [N/m] at radial position.
+
+
+        """
 
         def glauert_equation(x, sigma, F, phi, Cn):
             return [x[0] - ((1 - x[1]) ** 2 * sigma * Cn) / (np.sin(phi) ** 2),
@@ -188,8 +241,6 @@ class Rotor(Operation):
                 alpha_list.append(alpha)
                 i_list.append(i)
 
-
-
             i += 1
 
         if verbose:
@@ -216,15 +267,44 @@ class Rotor(Operation):
         v_rel = (v_0 / np.sin(phi)) * (1 - a)
         pT = 0.5 * Ct * Rotor.rho * (v_rel ** 2) * c
         pN = 0.5 * Cn * Rotor.rho * (v_rel ** 2) * c
-
+        print('v0',v_0)
+        print('wr',w*r)
         if i == imax:
             print('warning: Not converged')
 
         return pT, pN
 
-    def power_thrust_coefficient(self, tsr, u, theta, r, c, t_c, plot_Loads=False):
+    def power_thrust_coefficient(self, tsr, u, r, theta, c, t_c, plot_Loads=False):
         """Calculate the power and thrust for given operational parameters.
-        This method uses the norma_tangential_loads in order to calculate the loads."""
+        This method uses the norma_tangential_loads in order to calculate the loads.
+
+        :parameter
+        ----------
+        tsr : int or float
+            Tip speed ratio.
+        u : int or float
+            Wind speed [m/s].
+        r : int or float
+            Radial position.
+        c : int or float
+            Cord length.
+        t_c : int or float
+            Thickness/cord ratio.
+        plot_Loads : bool, default=False
+            Plot the normal and tangential loads against radial position.
+
+        :return
+        -------
+        power : float
+            Total power considering Rotor.number_of_blades.
+        thrust : float
+            Total thrust considering Rotor.number_of_blades.
+        pT : float
+            tangential load [N/m] at radial position.
+        pN : float
+            normal load [N/m] at radial position.
+
+        """
 
         pT = np.zeros(len(r))
         pN = np.zeros(len(r))
@@ -254,7 +334,18 @@ class Rotor(Operation):
 
     def power_curve(self, u_vector, w_vector, pitch_vector, plot_curve=True):
         """Calculate and plot the Power Curve given a vector of wind speed,
-        rotational speed (in RPM) and corresponding pitch angle."""
+        rotational speed (in RPM) and corresponding pitch angle.
+
+        :parameter
+        ---------
+        u_vector : array
+            range of speed for the power curve
+        w_vector : array
+            vector with rotational speed (in RPM)
+        pitch_vector : array
+            pitch angle vector
+
+        :return"""
 
         P, T = np.zeros(len(u_vector)), np.zeros(len(u_vector))
         #  df = Rotor.blade_data.iloc[0:]
