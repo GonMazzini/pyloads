@@ -176,10 +176,11 @@ class Rotor(Operation):
             tol_a, tol_aa = abs(a - a0), abs(aa - aa0)
 
             if verbose:
-                print('a: ',a)
-                print('a_prime: ',aa)
-                print('phi: ',phi)
-                print('alpha: ',alpha)
+                print('iter #:',i)
+                print('\t a: ',a)
+                print('\t a_prime: ',aa)
+                print('\t phi: ',phi)
+                print('\t alpha: ',alpha)
 
                 a_list.append(a)
                 aa_list.append(aa)
@@ -190,28 +191,26 @@ class Rotor(Operation):
 
 
             i += 1
-        print('hola')
-        print(alpha)
+
         if verbose:
             print('final iteration (i):',i)
             if i>1:
             # TODO
             #   review if figsize is correct.
-                fig, axes = plt.subplots(2,2, figsize=(12,2))
-                print('i_list', i_list)
-                print('a_list', a_list)
+                fig, axes = plt.subplots(2,2, figsize=(10,4))
                 axes[0,0].plot(i_list,a_list, marker='o')
                 axes[0,0].set_ylabel('a', fontsize=14)
-                axes[0,0].set_xlabel('iteration num', fontsize=14)
+                axes[0,0].set_xlabel('iteration num')
                 axes[0,1].plot(i_list,aa_list,marker='o')
-                axes[0,1].set_ylabel('a_prime', fontsize=14)
+                axes[0,1].set_ylabel('a\'', fontsize=14)
                 axes[0,1].set_xlabel('iteration num')
                 axes[1,0].plot(i_list,phi_list,marker='o')
-                axes[1,0].set_ylabel('flow angle (phi)', fontsize=14)
+                axes[1,0].set_ylabel('phi', fontsize=14)
                 axes[1,0].set_xlabel('iteration num')
                 axes[1,1].plot(i_list,alpha_list,marker='o')
-                axes[1,1].set_ylabel('attack angle (alpha)', fontsize=14)
+                axes[1,1].set_ylabel('alpha', fontsize=14)
                 axes[1,1].set_xlabel('iteration num')
+                fig.tight_layout(pad=3.0)
                 plt.show()
 
         v_rel = (v_0 / np.sin(phi)) * (1 - a)

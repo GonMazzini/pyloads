@@ -31,7 +31,7 @@ class Operation:
         else:
             out = self.operation.iloc[u-4] # Tuple
 
-        print(out)
+        # print(out)
         return out
 
 if __name__ == "__main__":
