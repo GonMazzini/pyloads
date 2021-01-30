@@ -133,7 +133,7 @@ class Rotor(Operation):
 
         return Cl, Cd
 
-    def normal_tangential_loads(self, tsr, v_0, theta, r, c, t_c, a=0.2, aa=0.2, i=0, imax=100):
+    def normal_tangential_loads(self, tsr, v_0, theta, r, c, t_c, a=0.2, aa=0.2, i=0, imax=100, verbose=False):
 
         def glauert_equation(x, sigma, F, phi, Cn):
             return [x[0] - ((1 - x[1]) ** 2 * sigma * Cn) / (np.sin(phi) ** 2),
@@ -151,18 +151,45 @@ class Rotor(Operation):
             Cl, Cd = self.lift_drag_coeff(alpha, t_c)
             Cn = Cl * np.cos(phi) + Cd * np.sin(phi)
             Ct = Cl * np.sin(phi) - Cd * np.cos(phi)
+
+            if i==0:
+                print(Rotor.radio)
+                print(r)
+                print(tsr)
+                print('phi:',phi)
+                print('theta:',theta)
+                print('alpha:',alpha)
+                print('Cl:',Cl)
+                print('Cl:', Cd)
+
             F = (2 / np.pi) * np.arccos(np.exp(-(B / 2) * (Rotor.radio - r) / (r * np.sin(abs(phi)))))
 
             if a <= 1 / 3:
                 a = 1 / (((4 * F * np.sin(phi) ** 2) / (sigma * Cn)) + 1)
 
             else:
-                CT = fsolve(glauert_equation, [1, a], args=(sigma, F, phi, Cn))  # [1, a] is necessary. why?
+                CT, a = fsolve(glauert_equation, [1, a], args=(sigma, F, phi, Cn))  # [1, a] is necessary. why?
 
             aa = 1 / (((4 * F * np.sin(phi) * np.cos(phi)) / (sigma * Ct)) - 1)
             tol_a, tol_aa = abs(a - a0), abs(aa - aa0)
-            i += 1
 
+            if verbose:
+                print('a: ',a)
+                print('a_prime: ',aa)
+                print('phi: ',phi)
+                print('alpha: ',alpha)
+                a_list, aa_list, phi_list,alpha_list=[],[],[],[]
+                a_list.append(a)
+                aa_list.append(aa)
+                phi_list.append(phi)
+                alpha_list.append(alpha)
+
+
+            i += 1
+        print('hola')
+        print(alpha)
+        if verbose:
+            print('final iteration (i):',i)
         v_rel = (v_0 / np.sin(phi)) * (1 - a)
         pT = 0.5 * Ct * Rotor.rho * (v_rel ** 2) * c
         pN = 0.5 * Cn * Rotor.rho * (v_rel ** 2) * c
@@ -237,18 +264,18 @@ if __name__ == "__main__":
     print(type(dtu_10mw))  # <class '__main__.Rotor'>
     # test power method
     oper_df = dtu_10mw.show_operation() # returns a DataFrame
-    u, pitch, rpm = dtu_10mw.show_operation(u=4)
+    u, pitch, rpm = dtu_10mw.show_operation(u=11)
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch)
+    # P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch)
 
-    # power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
-    #                                                           dtu_10mw.cord,
-    #                                                           dtu_10mw.t_c, plot_Loads=True)
+    power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
+                                                              dtu_10mw.cord,
+                                                              dtu_10mw.t_c, plot_Loads=True)
 
-    # tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[0] + pitch,
-    #                                              dtu_10mw.radio[0],
-    #                                              dtu_10mw.cord[0], dtu_10mw.t_c[0])
+    # tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[4] + pitch,
+    #                                              dtu_10mw.radio[4],
+    #                                              dtu_10mw.cord[4], dtu_10mw.t_c[4], verbose=True)
 
 # TODO
 #   * Review... different results as IPYNB :
