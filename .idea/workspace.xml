@@ -22,6 +22,8 @@
     <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyloads/static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/static_loads.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyloads/test_static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/test_static_loads.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +40,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="NACAv2" />
+        <entry key="$PROJECT_DIR$" value="temporary_brch" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -53,7 +55,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/docs/DTU_10MW_data" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -67,27 +69,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.static_loads">
-    <configuration name="__init__" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pyloads" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyloads/__init__.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="operation_dtu10mw" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -169,20 +150,34 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests in test_static_loads.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="pyloads" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/pyloads/test_static_loads.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
     <list>
-      <item itemvalue="Python.__init__" />
+      <item itemvalue="Python.operation_dtu10mw" />
       <item itemvalue="Python.static_loads" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.test_static_loads" />
-      <item itemvalue="Python.operation_dtu10mw" />
+      <item itemvalue="Python tests.Unittests in test_static_loads.py" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.static_loads" />
-        <item itemvalue="Python.operation_dtu10mw" />
+        <item itemvalue="Python tests.Unittests in test_static_loads.py" />
+        <item itemvalue="Python.test_static_loads" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.__init__" />
-        <item itemvalue="Python.static_loads" />
+        <item itemvalue="Python.operation_dtu10mw" />
       </list>
     </recent_temporary>
   </component>
@@ -429,7 +424,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612009884245</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="add docstring">
+      <created>1612033735084</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1612033735084</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -465,6 +467,7 @@
     <MESSAGE value="add plots for norm_tan_method" />
     <MESSAGE value="solve subplots for norm_tan_method" />
     <MESSAGE value="add docs directory" />
-    <option name="LAST_COMMIT_MESSAGE" value="add docs directory" />
+    <MESSAGE value="add docstring" />
+    <option name="LAST_COMMIT_MESSAGE" value="add docstring" />
   </component>
 </project>

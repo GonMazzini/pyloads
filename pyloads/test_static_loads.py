@@ -39,6 +39,7 @@ class TestStaticLoads(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
     rot = Rotor()
     Cl, Cd = rot.lift_drag_coeff(alpha=0, t_c=24.1)
     print(f'Cl {Cl}')

@@ -14,8 +14,11 @@ from pyloads.operation_dtu10mw import Operation
 print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
 
 class Rotor(Operation):
-    """Rotor object can be used to calculate the normal and tangential loads for
-    the DTU 10 MW Wind Turbine.
+    """Create a Rotor object (by Default is the DTU 10 MW) by defining the blade geometry (cord, twist and
+    thickness), as well as the aerodynamic profiles (i.e as output from XFOIL interactive program for design).
+    - Calculate the Normal and Tangential loads for given operational conditions.
+    - Calculate the Power and Thrust coefficient.
+    - Calculate and plot the Rotor Power Curve.
 
     Parameters
     ----------
@@ -28,8 +31,7 @@ class Rotor(Operation):
     number_of_blades = 3
     radio = 89.17  # [m]
     rho = 1.225  # [km/m3]
-    # TODO
-    #   remove this attribute?
+
     operation = pd.DataFrame(
         {'u': [4., 5., 6., 7., 8., 9., 10., 11., 12., 13., 14., 15., 16., 17., 18., 19., 20., 21.,
                22., 23., 24., 25., ],
@@ -45,26 +47,26 @@ class Rotor(Operation):
 
     # class constructor
 
-    def __init__(self, radio=None, twist=None, cord=None, t_c=None, profiles='Default'):
+    def __init__(self, radio='DTU_10MW', twist='DTU_10MW', cord='DTU_10MW', t_c='DTU_10MW', profiles='DTU_10MW'):
         super().__init__()
         bld = BladeFeatures()
         # Take the parameters from BladeFeatures corresponding to DTU 10MW
-        if radio is None:
+        if radio == 'DTU_10MW':
             self.radio = bld.radio
 
-        if twist is None:
+        if twist == 'DTU_10MW':
             self.twist = bld.twist
 
-        if cord is None:
+        if cord == 'DTU_10MW':
             self.cord = bld.cord
 
-        if t_c is None:
+        if t_c == 'DTU_10MW':
             self.t_c = bld.t_c
 
         """Load the aerodynamics profiles."""
         # TODO:
         #   This should be in a child class from Rotor called DTU-10MW
-        if profiles == 'Default':
+        if profiles == 'DTU_10MW':
             aero_prof = AeroProfiles()
 
             ffa_241 = aero_prof.ffa_241
@@ -191,7 +193,7 @@ class Rotor(Operation):
         def glauert_equation(x, sigma, F, phi, Cn):
             return [x[0] - ((1 - x[1]) ** 2 * sigma * Cn) / (np.sin(phi) ** 2),
                     x[0] - 4 * x[1] * (1 - 0.25 * (5 - 3 * x[1]) * x[1]) * F]
-
+        i = 0
         tol_a, tol_aa = 10, 10
         B = Rotor.number_of_blades
         sigma = (c * B) / (2 * np.pi * r)
@@ -249,16 +251,16 @@ class Rotor(Operation):
             # TODO
             #   review if figsize is correct.
                 fig, axes = plt.subplots(2,2, figsize=(10,4))
-                axes[0,0].plot(i_list,a_list, marker='o')
+                axes[0,0].plot(i_list, a_list, marker='o')
                 axes[0,0].set_ylabel('a', fontsize=14)
                 axes[0,0].set_xlabel('iteration num')
-                axes[0,1].plot(i_list,aa_list,marker='o')
+                axes[0,1].plot(i_list, aa_list,marker='o')
                 axes[0,1].set_ylabel('a\'', fontsize=14)
                 axes[0,1].set_xlabel('iteration num')
-                axes[1,0].plot(i_list,phi_list,marker='o')
+                axes[1,0].plot(i_list, phi_list,marker='o')
                 axes[1,0].set_ylabel('phi', fontsize=14)
                 axes[1,0].set_xlabel('iteration num')
-                axes[1,1].plot(i_list,alpha_list,marker='o')
+                axes[1,1].plot(i_list, alpha_list,marker='o')
                 axes[1,1].set_ylabel('alpha', fontsize=14)
                 axes[1,1].set_xlabel('iteration num')
                 fig.tight_layout(pad=3.0)
@@ -267,8 +269,7 @@ class Rotor(Operation):
         v_rel = (v_0 / np.sin(phi)) * (1 - a)
         pT = 0.5 * Ct * Rotor.rho * (v_rel ** 2) * c
         pN = 0.5 * Cn * Rotor.rho * (v_rel ** 2) * c
-        print('v0',v_0)
-        print('wr',w*r)
+
         if i == imax:
             print('warning: Not converged')
 
@@ -377,21 +378,22 @@ if __name__ == "__main__":
     dtu_10mw = Rotor()
     print(type(dtu_10mw))  # <class '__main__.Rotor'>
     # test power method
-    oper_df = dtu_10mw.show_operation() # returns a DataFrame
+    oper_df = dtu_10mw.show_operation()  # returns a DataFrame
     u, pitch, rpm = dtu_10mw.show_operation(u=11)
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
     # P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch)
 
-    # power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
-    #                                                           dtu_10mw.cord,
-    #                                                           dtu_10mw.t_c, plot_Loads=True)
+    power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
+                                                              dtu_10mw.cord,
+                                                              dtu_10mw.t_c, plot_Loads=True)
 
-    tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[4] + pitch,
-                                                 dtu_10mw.radio[4],
-                                                 dtu_10mw.cord[4], dtu_10mw.t_c[4], verbose=True)
+    # tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[0] + pitch,
+    #                                              dtu_10mw.radio[0],
+    #                                              dtu_10mw.cord[0], dtu_10mw.t_c[0], verbose=True)
 
-# TODO
+# TODO#
+#  * Power and Thrust are NEGATIVE...
 #   * Review... different results as IPYNB :
 #     [56.73502664, 128.66511904, 196.82870201, 955.83255009,
 #      1372.0058535, 1685.01982088, 2137.75442846, 2601.22578824,  <<<<< 2601 is the first different value.
