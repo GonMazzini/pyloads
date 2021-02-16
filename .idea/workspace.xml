@@ -19,11 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="">
+    <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="add TODO comment.">
+      <change afterPath="$PROJECT_DIR$/docs/loads11.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyloads/static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/static_loads.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/test_static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/test_static_loads.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="temporary_brch" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,33 +62,13 @@
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs\DTU_10MW_data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs" />
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs\notebooks" />
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads" />
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\pyloads" />
     </key>
   </component>
   <component name="RunManager" selected="Python.static_loads">
-    <configuration name="operation_dtu10mw" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pyloads" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyloads/operation_dtu10mw.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="static_loads" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -150,6 +129,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests for test_static_loads.TestStaticLoads.test_power_thrust_coefficient" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="pyloads" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_static_loads.TestStaticLoads.test_power_thrust_coefficient&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="Unittests in test_static_loads.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -165,19 +158,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.operation_dtu10mw" />
       <item itemvalue="Python.static_loads" />
       <item itemvalue="Python.test" />
       <item itemvalue="Python.test_static_loads" />
       <item itemvalue="Python tests.Unittests in test_static_loads.py" />
+      <item itemvalue="Python tests.Unittests for test_static_loads.TestStaticLoads.test_power_thrust_coefficient" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.static_loads" />
+        <item itemvalue="Python tests.Unittests for test_static_loads.TestStaticLoads.test_power_thrust_coefficient" />
         <item itemvalue="Python tests.Unittests in test_static_loads.py" />
         <item itemvalue="Python.test_static_loads" />
         <item itemvalue="Python.test" />
-        <item itemvalue="Python.operation_dtu10mw" />
       </list>
     </recent_temporary>
   </component>
@@ -431,7 +424,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612033735084</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="add TODO comment.">
+      <created>1612172792207</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1612172792207</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -468,6 +468,23 @@
     <MESSAGE value="solve subplots for norm_tan_method" />
     <MESSAGE value="add docs directory" />
     <MESSAGE value="add docstring" />
-    <option name="LAST_COMMIT_MESSAGE" value="add docstring" />
+    <MESSAGE value="add TODO comment." />
+    <option name="LAST_COMMIT_MESSAGE" value="add TODO comment." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyloads/static_loads.py</url>
+          <line>114</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/pyloads/static_loads.py</url>
+          <line>384</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

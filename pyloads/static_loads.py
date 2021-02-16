@@ -44,7 +44,6 @@ class Rotor(Operation):
          })
 
     # blade_data = pd.read_csv('bladedat.txt', sep='\t', names=['r', 'twist', 'c', 't/c'])
-
     # class constructor
 
     def __init__(self, radio='DTU_10MW', twist='DTU_10MW', cord='DTU_10MW', t_c='DTU_10MW', profiles='DTU_10MW'):
@@ -115,6 +114,7 @@ class Rotor(Operation):
         B = Rotor.number_of_blades
         for i in range(len(pN) - 1):
             T += (pN[i + 1] + pN[i]) * 0.5 * (r[i + 1] - r[i])
+            print(f'thrust {T} for item num {i}')
         return T * B
 
     def lift_drag_coeff(self, alpha, t_c):
@@ -311,7 +311,7 @@ class Rotor(Operation):
         pN = np.zeros(len(r))
         for i in range(len(r)):
             try:
-                pT[i], pN[i] = self.normal_tangential_loads(tsr, u, theta[i], r[i], c[i], t_c[i])
+                pT[i], pN[i] = self.normal_tangential_loads(tsr, u, r[i], theta[i], c[i], t_c[i])
             except TypeError:
                 pT[i], pN[i] = np.nan, np.nan
         # append and assign values at r=R
@@ -320,6 +320,8 @@ class Rotor(Operation):
         pN = np.append(pN[:-1], 0)
         w = tsr * u / Rotor.radio
         power = Rotor.integrate(pT, r) * Rotor.number_of_blades * w
+        print(f'power integral{Rotor.integrate(pT,r)}')
+        print(f'thrust integral{Rotor.thruster(pN, r)}')
         thrust = Rotor.thruster(pN, r)
 
         if plot_Loads:  # ( == True)
@@ -338,7 +340,7 @@ class Rotor(Operation):
         rotational speed (in RPM) and corresponding pitch angle.
 
         :parameter
-        ---------
+        ----------
         u_vector : array
             range of speed for the power curve
         w_vector : array
@@ -346,7 +348,9 @@ class Rotor(Operation):
         pitch_vector : array
             pitch angle vector
 
-        :return"""
+        :return
+        -------
+        """
 
         P, T = np.zeros(len(u_vector)), np.zeros(len(u_vector))
         #  df = Rotor.blade_data.iloc[0:]
@@ -359,8 +363,10 @@ class Rotor(Operation):
             pitch = pitch_vector.values[j]
             TSR = w * Rotor.radio / u
             print(TSR, w, pitch)
-            P[j], T[j], pT[j,], pN[j,] = self.power_thrust_coefficient(TSR, u, self.twist + pitch, self.radio,
+            P[j], T[j], pT[j,], pN[j,] = self.power_thrust_coefficient(TSR, u, self.radio, self.twist + pitch,
                                                                        self.cord, self.t_c)
+
+
         if plot_curve:
             plt.plot(u_vector, P / 1e6, linestyle='--', marker='o')
             plt.xlabel('Wind speed')
@@ -370,6 +376,7 @@ class Rotor(Operation):
 
 
 if __name__ == "__main__":
+    print('stop')
     # instance a rotor object.
     # WT_data = pd.read_csv('operation.txt', sep='\s+')
     # WT_data.index = WT_data.u
@@ -382,11 +389,11 @@ if __name__ == "__main__":
     u, pitch, rpm = dtu_10mw.show_operation(u=11)
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    # P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch)
+    P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch)
 
-    power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
-                                                              dtu_10mw.cord,
-                                                              dtu_10mw.t_c, plot_Loads=True)
+    #  power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
+    #                                                          dtu_10mw.cord,
+    #                                                          dtu_10mw.t_c, plot_Loads=True)
 
     # tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[0] + pitch,
     #                                              dtu_10mw.radio[0],
