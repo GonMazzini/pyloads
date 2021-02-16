@@ -390,7 +390,7 @@ if __name__ == "__main__":
     u, pitch, rpm = dtu_10mw.show_operation(u=6)
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    # P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch)
+ #   P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch)
 
     power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.radio, dtu_10mw.twist + pitch,
                                                              dtu_10mw.cord,

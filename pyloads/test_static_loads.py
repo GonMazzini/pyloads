@@ -29,7 +29,7 @@ class TestStaticLoads(unittest.TestCase):
         u, pitch, rpm = WT_data.loc[6]
         tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-        power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
+        power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.radio, dtu_10mw.twist + pitch,
                                                                   dtu_10mw.cord,
                                                                   dtu_10mw.t_c, plot_Loads=True)
 
