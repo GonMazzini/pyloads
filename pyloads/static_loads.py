@@ -155,7 +155,7 @@ class Rotor(Operation):
         # TODO:
         #   Add velocity triangle vector plot
         """Calculate the Tangential and Normal loads (in N/m) given the wind speed and tip speed ratio (tsr) for a given
-        radial position (twist, cord length and thickness/corde ratio at the radial position must be given).
+        radial position (twist, cord length and thickness/cord ratio at the radial position must be given).
 
         Parameters
         ----------
