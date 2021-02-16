@@ -20,8 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/loads20.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/loads6.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/loads11.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/DTU_10MW_data/loads11.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyloads/static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/static_loads.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +65,7 @@
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs\DTU_10MW_data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs\DTU_10MW_data" />
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs" />
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs\notebooks" />
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads" />
@@ -485,11 +490,6 @@
           <url>file://$PROJECT_DIR$/pyloads/static_loads.py</url>
           <line>114</line>
           <option name="timeStamp" value="10" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pyloads/static_loads.py</url>
-          <line>384</line>
-          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

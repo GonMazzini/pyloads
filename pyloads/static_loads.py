@@ -11,7 +11,7 @@ from pyloads.blade_data import BladeFeatures
 from pyloads.aerodynamic_profiles import AeroProfiles
 from pyloads.operation_dtu10mw import Operation
 
-print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
+
 
 class Rotor(Operation):
     """Create a Rotor object (by Default is the DTU 10 MW) by defining the blade geometry (cord, twist and
@@ -251,18 +251,18 @@ class Rotor(Operation):
             # TODO
             #   review if figsize is correct.
                 fig, axes = plt.subplots(2,2, figsize=(10,4))
-                axes[0,0].plot(i_list, a_list, marker='o')
-                axes[0,0].set_ylabel('a', fontsize=14)
-                axes[0,0].set_xlabel('iteration num')
-                axes[0,1].plot(i_list, aa_list,marker='o')
-                axes[0,1].set_ylabel('a\'', fontsize=14)
-                axes[0,1].set_xlabel('iteration num')
-                axes[1,0].plot(i_list, phi_list,marker='o')
-                axes[1,0].set_ylabel('phi', fontsize=14)
-                axes[1,0].set_xlabel('iteration num')
-                axes[1,1].plot(i_list, alpha_list,marker='o')
-                axes[1,1].set_ylabel('alpha', fontsize=14)
-                axes[1,1].set_xlabel('iteration num')
+                axes[0, 0].plot(i_list, a_list, marker='o')
+                axes[0, 0].set_ylabel('a', fontsize=14)
+                axes[0, 0].set_xlabel('iteration num')
+                axes[0, 1].plot(i_list, aa_list,marker='o')
+                axes[0, 1].set_ylabel('a\'', fontsize=14)
+                axes[0, 1].set_xlabel('iteration num')
+                axes[1, 0].plot(i_list, phi_list,marker='o')
+                axes[1, 0].set_ylabel('phi', fontsize=14)
+                axes[1, 0].set_xlabel('iteration num')
+                axes[1, 1].plot(i_list, alpha_list,marker='o')
+                axes[1, 1].set_ylabel('alpha', fontsize=14)
+                axes[1, 1].set_xlabel('iteration num')
                 fig.tight_layout(pad=3.0)
                 plt.show()
 
@@ -376,6 +376,7 @@ class Rotor(Operation):
 
 
 if __name__ == "__main__":
+    print(f'numpy version {np.__version__} , \t pandas vers {pd.__version__} , \t scipy vers {sp.__version__}')
     print('stop')
     # instance a rotor object.
     # WT_data = pd.read_csv('operation.txt', sep='\s+')
@@ -386,18 +387,17 @@ if __name__ == "__main__":
     print(type(dtu_10mw))  # <class '__main__.Rotor'>
     # test power method
     oper_df = dtu_10mw.show_operation()  # returns a DataFrame
-    u, pitch, rpm = dtu_10mw.show_operation(u=11)
+    u, pitch, rpm = dtu_10mw.show_operation(u=6)
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
     P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch)
 
-    #  power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.twist + pitch, dtu_10mw.radio,
+    # power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.radio, dtu_10mw.twist + pitch,
     #                                                          dtu_10mw.cord,
     #                                                          dtu_10mw.t_c, plot_Loads=True)
 
-    # tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[0] + pitch,
-    #                                              dtu_10mw.radio[0],
-    #                                              dtu_10mw.cord[0], dtu_10mw.t_c[0], verbose=True)
+    # tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.radio[0], dtu_10mw.twist[0] + pitch,
+    #                                                  dtu_10mw.cord[0], dtu_10mw.t_c[0], verbose=True)
 
 # TODO#
 #  * Power and Thrust are NEGATIVE...
