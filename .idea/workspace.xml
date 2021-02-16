@@ -21,8 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/static_loads.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,6 +72,9 @@
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -439,7 +440,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613501091989</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Before commiting.">
+      <created>1613512843335</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1613512843335</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -478,7 +486,8 @@
     <MESSAGE value="add docstring" />
     <MESSAGE value="add TODO comment." />
     <MESSAGE value="Solve power curve bug. Argument position were incorrect." />
-    <option name="LAST_COMMIT_MESSAGE" value="Solve power curve bug. Argument position were incorrect." />
+    <MESSAGE value="Before commiting." />
+    <option name="LAST_COMMIT_MESSAGE" value="Before commiting." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
