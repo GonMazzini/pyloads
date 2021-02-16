@@ -114,7 +114,7 @@ class Rotor(Operation):
         B = Rotor.number_of_blades
         for i in range(len(pN) - 1):
             T += (pN[i + 1] + pN[i]) * 0.5 * (r[i + 1] - r[i])
-            print(f'thrust {T} for item num {i}')
+            # print(f'thrust {T} for item num {i}')
         return T * B
 
     def lift_drag_coeff(self, alpha, t_c):
@@ -271,7 +271,7 @@ class Rotor(Operation):
         pN = 0.5 * Cn * Rotor.rho * (v_rel ** 2) * c
 
         if i == imax:
-            print('warning: Not converged')
+            print(f'warning: Not converged for {imax} iter at radial position = {r} m')
 
         return pT, pN
 
@@ -320,8 +320,8 @@ class Rotor(Operation):
         pN = np.append(pN[:-1], 0)
         w = tsr * u / Rotor.radio
         power = Rotor.integrate(pT, r) * Rotor.number_of_blades * w
-        print(f'power integral{Rotor.integrate(pT,r)}')
-        print(f'thrust integral{Rotor.thruster(pN, r)}')
+        # print(f'power integral{Rotor.integrate(pT,r)}')
+        # print(f'thrust integral{Rotor.thruster(pN, r)}')
         thrust = Rotor.thruster(pN, r)
 
         if plot_Loads:  # ( == True)
@@ -356,13 +356,13 @@ class Rotor(Operation):
         #  df = Rotor.blade_data.iloc[0:]
         pN = np.zeros([len(u_vector), len(self.radio)])
         pT = np.zeros([len(u_vector), len(self.radio)])
-        print(u_vector)
+        # print(u_vector)
         for j in range(len(u_vector)):
             u = u_vector.values[j]
             w = w_vector.values[j] * np.pi / 30  # convert from RPM to rad/s
             pitch = pitch_vector.values[j]
             TSR = w * Rotor.radio / u
-            print(TSR, w, pitch)
+            # print(TSR, w, pitch)
             P[j], T[j], pT[j,], pN[j,] = self.power_thrust_coefficient(TSR, u, self.radio, self.twist + pitch,
                                                                        self.cord, self.t_c)
 

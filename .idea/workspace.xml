@@ -19,8 +19,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="add TODO comment.">
-      <change afterPath="$PROJECT_DIR$/docs/loads11.txt" afterDir="false" />
+    <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyloads/static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/static_loads.py" afterDir="false" />
     </list>
@@ -431,7 +430,14 @@
       <option name="project" value="LOCAL" />
       <updated>1612172792207</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="Solve power curve bug. Argument position were incorrect.">
+      <created>1613501091988</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1613501091989</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -469,7 +475,8 @@
     <MESSAGE value="add docs directory" />
     <MESSAGE value="add docstring" />
     <MESSAGE value="add TODO comment." />
-    <option name="LAST_COMMIT_MESSAGE" value="add TODO comment." />
+    <MESSAGE value="Solve power curve bug. Argument position were incorrect." />
+    <option name="LAST_COMMIT_MESSAGE" value="Solve power curve bug. Argument position were incorrect." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
