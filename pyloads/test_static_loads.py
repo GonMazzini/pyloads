@@ -7,34 +7,29 @@ import unittest
 
 class TestStaticLoads(unittest.TestCase):
     def test_normal_tangential_loads(self):
-        dtu_10mw = Rotor()
+        """Test for normal_tangential_loads results for 6 m/s wind speed."""
 
-        WT_data = pd.read_csv('operation.txt', sep='\s+')
-        WT_data.index = WT_data.u
-        u, pitch, rpm = WT_data.loc[6]
+        dtu_10mw = Rotor()
+        u, pitch, rpm = dtu_10mw.show_operation(u=6)
         tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-        tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.twist[0] + pitch,
-                                                         dtu_10mw.radio[0],
-                                                         dtu_10mw.cord[0], dtu_10mw.t_c[0])
-        self.assertEqual(tan_i, -16.635578670240793, 'should be -16.635578670240793 ')  # -16.635578670240793
-        self.assertEqual(norm_i, 56.735026640634054, 'should be 56.735026640634054 ')  # 56.735026640634054
+        tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.radio[0], dtu_10mw.twist[0] + pitch,
+                                                         dtu_10mw.cord[0], dtu_10mw.t_c[0], verbose=False)
+
+        self.assertEqual(np.round(tan_i, 3), -16.636, 'should be -16.636 ')  # -16.635578670240793
+        self.assertEqual(np.round(norm_i, 3), 56.735, 'should be 56.735 ')  # 56.735026640634054
 
     def test_power_thrust_coefficient(self):
         dtu_10mw = Rotor()
-        print(dtu_10mw.radio)
-
-        WT_data = pd.read_csv('operation.txt', sep='\s+')
-        WT_data.index = WT_data.u
-        u, pitch, rpm = WT_data.loc[6]
+        u, pitch, rpm = dtu_10mw.show_operation(u=6)
         tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
         power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.radio, dtu_10mw.twist + pitch,
                                                                   dtu_10mw.cord,
-                                                                  dtu_10mw.t_c, plot_Loads=True)
+                                                                  dtu_10mw.t_c, plot_Loads=False)
 
-        self.assertEqual(power, 1599385.8391734336, 'should be 1599385.8391734336')
-        self.assertEqual(thrust, 501337.71234120766, 'should be 501337.71234120766')
+        self.assertEqual(np.round(power), 1533727.0, 'should be 1533727.0')
+        self.assertEqual(np.round(thrust), 481016.0, 'should be 481016.0')
 
 
 if __name__ == '__main__':

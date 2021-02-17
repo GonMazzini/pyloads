@@ -20,7 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_1_2021_04_43__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_1_2021_04_43__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyloads/static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/static_loads.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyloads/test_static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/test_static_loads.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +55,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/docs/DTU_10MW_data" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -67,14 +70,11 @@
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\pyloads" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.static_loads">
+  <component name="RunManager" selected="Python tests.Unittests for test_static_loads.TestStaticLoads">
     <configuration name="static_loads" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -89,46 +89,32 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_static_loads.TestStaticLoads" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/pyloads/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_static_loads.TestStaticLoads&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="test_static_loads" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for test_static_loads.TestStaticLoads.test_normal_tangential_loads" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\Usuario\PycharmProjects\pyloads\pyloads\test_static_loads.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_static_loads.TestStaticLoads.test_normal_tangential_loads&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="Unittests for test_static_loads.TestStaticLoads.test_power_thrust_coefficient" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
@@ -161,18 +147,18 @@
     </configuration>
     <list>
       <item itemvalue="Python.static_loads" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.test_static_loads" />
-      <item itemvalue="Python tests.Unittests in test_static_loads.py" />
       <item itemvalue="Python tests.Unittests for test_static_loads.TestStaticLoads.test_power_thrust_coefficient" />
+      <item itemvalue="Python tests.Unittests in test_static_loads.py" />
+      <item itemvalue="Python tests.Unittests for test_static_loads.TestStaticLoads.test_normal_tangential_loads" />
+      <item itemvalue="Python tests.Unittests for test_static_loads.TestStaticLoads" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.static_loads" />
+        <item itemvalue="Python tests.Unittests for test_static_loads.TestStaticLoads" />
         <item itemvalue="Python tests.Unittests for test_static_loads.TestStaticLoads.test_power_thrust_coefficient" />
+        <item itemvalue="Python tests.Unittests for test_static_loads.TestStaticLoads.test_normal_tangential_loads" />
+        <item itemvalue="Python.static_loads" />
         <item itemvalue="Python tests.Unittests in test_static_loads.py" />
-        <item itemvalue="Python.test_static_loads" />
-        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -447,7 +433,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613512843335</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="add loads data.">
+      <created>1613519035889</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1613519035889</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -487,17 +480,7 @@
     <MESSAGE value="add TODO comment." />
     <MESSAGE value="Solve power curve bug. Argument position were incorrect." />
     <MESSAGE value="Before commiting." />
-    <option name="LAST_COMMIT_MESSAGE" value="Before commiting." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pyloads/static_loads.py</url>
-          <line>114</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="add loads data." />
+    <option name="LAST_COMMIT_MESSAGE" value="add loads data." />
   </component>
 </project>
