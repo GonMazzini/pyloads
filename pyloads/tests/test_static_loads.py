@@ -1,14 +1,12 @@
-import pandas as pd
 import numpy as np
-
-from pyloads.bem import Rotor
 import unittest
+
+from pyloads.bem.static_loads import Rotor
+
 
 
 class TestStaticLoads(unittest.TestCase):
 
-    # def __init__(self, plot_flag=False):
-    #     self.plot_flag = plot_flag
 
     def test_normal_tangential_loads(self):
         """Test for normal_tangential_loads results for 6 m/s wind speed."""

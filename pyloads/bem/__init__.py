@@ -1,1 +1,1 @@
-from .static_loads import Rotor
+# from .static_loads import Rotor

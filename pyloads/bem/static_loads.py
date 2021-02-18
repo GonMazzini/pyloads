@@ -2,15 +2,26 @@
 import numpy as np  # 1.19.4
 import pandas as pd  # 1.2.0
 import scipy as sp  #
+
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 from scipy.optimize import fsolve
 
+# FIXME
+#   for some reason, when running the __init__ (/pyloads/__init__= from the CMD
+#   it gives an error...
 """Local modules"""
+from pyloads.dtu10mw.operation_dtu10mw import Operation
 from pyloads.dtu10mw.blade_data import BladeFeatures
 from pyloads.dtu10mw.aerodynamic_profiles import AeroProfiles
-from pyloads.dtu10mw.operation_dtu10mw import Operation
 
+
+
+
+
+
+class Dummy:
+    pass
 
 
 class Rotor(Operation):
@@ -193,6 +204,7 @@ class Rotor(Operation):
         def glauert_equation(x, sigma, F, phi, Cn):
             return [x[0] - ((1 - x[1]) ** 2 * sigma * Cn) / (np.sin(phi) ** 2),
                     x[0] - 4 * x[1] * (1 - 0.25 * (5 - 3 * x[1]) * x[1]) * F]
+
         i = 0
         tol_a, tol_aa = 10, 10
         B = Rotor.number_of_blades
@@ -231,11 +243,11 @@ class Rotor(Operation):
             tol_a, tol_aa = abs(a - a0), abs(aa - aa0)
 
             if verbose:
-                print('iter #:',i)
-                print('\t a: ',a)
-                print('\t a_prime: ',aa)
-                print('\t phi: ',phi)
-                print('\t alpha: ',alpha)
+                print('iter #:', i)
+                print('\t a: ', a)
+                print('\t a_prime: ', aa)
+                print('\t phi: ', phi)
+                print('\t alpha: ', alpha)
 
                 a_list.append(a)
                 aa_list.append(aa)
@@ -246,21 +258,21 @@ class Rotor(Operation):
             i += 1
 
         if verbose:
-            print('final iteration (i):',i)
-            if i>1:
-            # TODO
-            #   review if figsize is correct.
-                fig, axes = plt.subplots(2,2, figsize=(10,4))
+            print('final iteration (i):', i)
+            if i > 1:
+                # TODO
+                #   review if figsize is correct.
+                fig, axes = plt.subplots(2, 2, figsize=(10, 4))
                 axes[0, 0].plot(i_list, a_list, marker='o')
                 axes[0, 0].set_ylabel('a', fontsize=14)
                 axes[0, 0].set_xlabel('iteration num')
-                axes[0, 1].plot(i_list, aa_list,marker='o')
+                axes[0, 1].plot(i_list, aa_list, marker='o')
                 axes[0, 1].set_ylabel('a\'', fontsize=14)
                 axes[0, 1].set_xlabel('iteration num')
-                axes[1, 0].plot(i_list, phi_list,marker='o')
+                axes[1, 0].plot(i_list, phi_list, marker='o')
                 axes[1, 0].set_ylabel('phi', fontsize=14)
                 axes[1, 0].set_xlabel('iteration num')
-                axes[1, 1].plot(i_list, alpha_list,marker='o')
+                axes[1, 1].plot(i_list, alpha_list, marker='o')
                 axes[1, 1].set_ylabel('alpha', fontsize=14)
                 axes[1, 1].set_xlabel('iteration num')
                 fig.tight_layout(pad=3.0)
@@ -366,7 +378,6 @@ class Rotor(Operation):
             P[j], T[j], pT[j,], pN[j,] = self.power_thrust_coefficient(TSR, u, self.radio, self.twist + pitch,
                                                                        self.cord, self.t_c)
 
-
         if plot_curve:
             plt.plot(u_vector, P / 1e6, linestyle='--', marker='o')
             plt.xlabel('Wind speed')
@@ -390,27 +401,26 @@ if __name__ == "__main__":
     u, pitch, rpm = dtu_10mw.show_operation(u=6)
     tsr = (rpm * np.pi / 30) * Rotor.radio / u
 
-    P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch, plot_curve=True)
+    # P, T = dtu_10mw.power_curve(oper_df.u, oper_df.RPM, oper_df.pitch, plot_curve=True)
 
-    # power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.radio, dtu_10mw.twist + pitch,
-    #                                                          dtu_10mw.cord,
-    #                                                          dtu_10mw.t_c, plot_Loads=True)
+    power, thrust, pT, pN = dtu_10mw.power_thrust_coefficient(tsr, u, dtu_10mw.radio, dtu_10mw.twist + pitch,
+                                                             dtu_10mw.cord,
+                                                             dtu_10mw.t_c, plot_Loads=True)
 
     # tan_i, norm_i = dtu_10mw.normal_tangential_loads(tsr, u, dtu_10mw.radio[0], dtu_10mw.twist[0] + pitch,
     #                                                  dtu_10mw.cord[0], dtu_10mw.t_c[0], verbose=True)
 
-# TODO#
-#  * Power and Thrust are NEGATIVE...
-#   * Review... different results as IPYNB :
-#     [56.73502664, 128.66511904, 196.82870201, 955.83255009,
-#      1372.0058535, 1685.01982088, 2137.75442846, 2601.22578824,  <<<<< 2601 is the first different value.
-#      2986.14621076, 3263.07927127, 3431.68926186, 3461.78866371,
-#      3474.49291476, 3421.50774457, 3224.94102283, 2815.05298268,
-#      2063.40641495, 0.])
-#   * Improve plots
-#   * let DTU_10MW be a subclass and define Rotor with user params.
-#   * add power and thrust calculation DONE !
-#   * add DEFLECTION !
-
+    # TODO#
+    #  * Power and Thrust are NEGATIVE...
+    #   * Review... different results as IPYNB :
+    #     [56.73502664, 128.66511904, 196.82870201, 955.83255009,
+    #      1372.0058535, 1685.01982088, 2137.75442846, 2601.22578824,  <<<<< 2601 is the first different value.
+    #      2986.14621076, 3263.07927127, 3431.68926186, 3461.78866371,
+    #      3474.49291476, 3421.50774457, 3224.94102283, 2815.05298268,
+    #      2063.40641495, 0.])
+    #   * Improve plots
+    #   * let DTU_10MW be a subclass and define Rotor with user params.
+    #   * add power and thrust calculation DONE !
+    #   * add DEFLECTION !
 
     print('Finish ran static loads.')

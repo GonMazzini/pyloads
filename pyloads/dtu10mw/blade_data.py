@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class BladeFeatures:
     # TODO:
     #   add functionality to check if specific blade data is correct
