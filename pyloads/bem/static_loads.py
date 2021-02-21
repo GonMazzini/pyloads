@@ -75,6 +75,7 @@ class Rotor(Operation):
 
         """Load the aerodynamics profiles."""
         # TODO:
+        #   The dict DOES NOT PROVIDE THE AIRFOIL NAMES. CORRECT.
         #   This should be in a child class from Rotor called DTU-10MW
         if profiles == 'DTU_10MW':
             aero_prof = AeroProfiles()

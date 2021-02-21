@@ -20,15 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa1d06f5-e7c6-4fee-801a-e20a187374c8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pyloads/aeroeslaticity/trans_mat.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pyloads/script.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_1_2021_04_43__Default_Changelist_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_27_1_2021_04_43__Default_Changelist_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/bem/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/bem/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyloads/aeroeslaticity/trans_mat.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/aeroeslaticity/trans_mat.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyloads/bem/static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/bem/static_loads.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/dtu10mw/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/dtu10mw/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/dtu10mw/blade_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/dtu10mw/blade_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pyloads/tests/test_static_loads.py" beforeDir="false" afterPath="$PROJECT_DIR$/pyloads/tests/test_static_loads.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +40,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="add_unittest" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -60,7 +55,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PyWake" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/docs/DTU_10MW_data" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -68,11 +63,11 @@
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs\DTU_10MW_data" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Usuario\PycharmProjects\pyloads\pyloads\dtu10mw" />
-      <recent name="C:\Users\Usuario\PycharmProjects\pyloads\pyloads\bem" />
-      <recent name="C:\Users\Usuario\PycharmProjects\pyloads\pyloads\tests" />
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs\DTU_10MW_data" />
       <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs" />
+      <recent name="C:\Users\Usuario\PycharmProjects\pyloads\docs\notebooks" />
+      <recent name="C:\Users\Usuario\PycharmProjects\pyloads" />
+      <recent name="C:\Users\Usuario\PycharmProjects\pyloads\pyloads" />
     </key>
   </component>
   <component name="RunManager" selected="Python.trans_mat">
@@ -118,24 +113,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="static_loads" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pyloads" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\Usuario\PycharmProjects\pyloads\pyloads\bem\static_loads.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="trans_mat" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -154,6 +131,20 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Unittests for test_static_loads.TestStaticLoads" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="pyloads" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/pyloads/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_static_loads.TestStaticLoads&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
     <configuration name="Unittests in test_static_loads.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="pyloads" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -169,19 +160,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.static_loads" />
+      <item itemvalue="Python.trans_mat" />
       <item itemvalue="Python.__init__" />
       <item itemvalue="Python.script" />
-      <item itemvalue="Python.trans_mat" />
       <item itemvalue="Python tests.Unittests in test_static_loads.py" />
+      <item itemvalue="Python tests.Unittests for test_static_loads.TestStaticLoads" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.trans_mat" />
-        <item itemvalue="Python.__init__" />
+        <item itemvalue="Python tests.Unittests for test_static_loads.TestStaticLoads" />
         <item itemvalue="Python tests.Unittests in test_static_loads.py" />
-        <item itemvalue="Python.static_loads" />
         <item itemvalue="Python.script" />
+        <item itemvalue="Python.__init__" />
       </list>
     </recent_temporary>
   </component>
@@ -463,21 +454,7 @@
       <option name="project" value="LOCAL" />
       <updated>1613519035889</updated>
     </task>
-    <task id="LOCAL-00039" summary="Update unittest for PT coeff and NT loads">
-      <created>1613590406697</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1613590406698</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Added packages for modularization.">
-      <created>1613644472371</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1613644472371</updated>
-    </task>
-    <option name="localTasksCounter" value="41" />
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -493,6 +470,8 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="add def flow_angle" />
+    <MESSAGE value="normal and tangencial loads calclator works." />
     <MESSAGE value="assertion for drag lift method" />
     <MESSAGE value="plot func" />
     <MESSAGE value="copy the add plot branch" />
@@ -516,17 +495,15 @@
     <MESSAGE value="Solve power curve bug. Argument position were incorrect." />
     <MESSAGE value="Before commiting." />
     <MESSAGE value="add loads data." />
-    <MESSAGE value="Update unittest for PT coeff and NT loads" />
-    <MESSAGE value="Added packages for modularization." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added packages for modularization." />
+    <option name="LAST_COMMIT_MESSAGE" value="add loads data." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/pyloads/aeroeslaticity/trans_mat.py</url>
-          <line>81</line>
-          <option name="timeStamp" value="1" />
+          <line>76</line>
+          <option name="timeStamp" value="13" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
