@@ -1,6 +1,6 @@
 # Python package for calculating the static loads for a wind turbine usgin Blade Element Momentum theory. 
-
-![alt text](https://cdn.jvejournals.com/articles/20595/xml/img1.jpg)
+![image](images/clasification.png)
+![alt text](docs/notebooks/PyLoadsSCREEN.png)
 
 # The DTU 10 MW is used as example for computing:
 - Normal and tangential loads
